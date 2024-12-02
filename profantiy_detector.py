@@ -23,8 +23,8 @@ class Trie:
         if word_length<4:
             return 1
         elif 4<word_length<10:
-            return 0.9
-        return 0.8
+            return 0.8
+        return 0.7
 
     def is_foul(self, word):
         threshold = self.get_dynamic_threshold(len(word))

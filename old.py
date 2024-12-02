@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from foul_lang import profanity_detector, buildTrie
+# from foul_lang import profanity_detector, buildTrie
 
 #base
 Base = declarative_base()

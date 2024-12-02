@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr, field_validator
+from pydantic import BaseModel, EmailStr, field_validator, Field
 import regex as re
+
 
 # Pydantic model for input validation
 class UserCreate(BaseModel):
@@ -7,8 +8,6 @@ class UserCreate(BaseModel):
     password: str
     phone_number: str
     email: EmailStr
-
-
     @field_validator("phone_number")
     def validate_phone_number(cls, value):
         # Regex for validating phone numbers (e.g., +1234567890 or 1234567890)
@@ -29,6 +28,12 @@ class UserCreate(BaseModel):
             raise ValueError("Password must contain at least one special character.")
         return value
 
+
+
 class UserLogin(BaseModel):
     username: str
     password: str
+
+class TwoFACodeRequest(BaseModel):
+    username: str
+    code: str
