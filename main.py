@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
 
 from sqlalchemy import create_engine, MetaData, Table, insert, delete
 from sqlalchemy.exc import IntegrityError
@@ -11,34 +11,37 @@ from sqlalchemy.future import select
 from validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
 
-import bcrypt, jwt, json, base64, secrets, smtplib,logging,uvicorn
+import bcrypt, jwt, json, base64, secrets,logging, uvicorn, os
 from typing import List
 from datetime import datetime, timedelta
 from pyotp import TOTP
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
-
+from two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret
 from llm_res import setup_model, llm_response
 from profantiy_detector import profanity_detector, build_trie, Trie
+from ws_setup import WebSocketConnectionManager
 
-#db setup
-DATABASE_URL = "postgresql://omkar:password@localhost/sih_testing"
+#db connection
+DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 metadata.reflect(bind=engine)
+#db tables
 users_table = Table("users", metadata, autoload_with=engine)
 
+
 # Connect to Redis
-redis = aioredis.from_url("redis://localhost:6379", decode_responses=True)
+redis = aioredis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
 
 # Set up a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+#logger setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 #fastapi setup
 app = FastAPI()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 app.add_middleware(
     CORSMiddleware,
@@ -48,54 +51,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-logging.basicConfig(level=logging.INFO)  # You can adjust the level as needed
-logger = logging.getLogger(__name__)
+#create objects of necessary classes
+FOUL_TRIE=build_trie()
+LOCAL_LLM=setup_model()
+manager = WebSocketConnectionManager()
 
-
-# JWT Secret Key (Store it securely in production)
-SECRET_KEY = "your-secret-key"
-ALGORITHM = "HS256"
-
-# SMTP details latermove to the env file
-SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 587
-SMTP_USERNAME = 'dummy.bloodbank1@gmail.com'
-SMTP_PASSWORD = 'awwm kmxo woow hlkh'
-
-def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=30)):
-    to_encode = data.copy()
-    expire = datetime.now() + expires_delta
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
-def send_otp_via_email(email:str , otp_code: str):
-        # Create the email content
-        message = MIMEMultipart()
-        message['From'] = SMTP_USERNAME
-        message['To'] = email
-        message['Subject'] = 'Your OTP Code'
-
-        # Email body
-        body = f'Your OTP code is {otp_code}'
-        message.attach(MIMEText(body, 'plain'))
-
-        # Send the email
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SMTP_USERNAME, SMTP_PASSWORD)
-            server.sendmail(SMTP_USERNAME, email, message.as_string())
-
-
-foul_trie=build_trie()
-
-def generate_totp_secret():
-    # Generate 20 random bytes
-    secret_bytes = secrets.token_bytes(20)
-    # Encode to Base32
-    totp_secret = base64.b32encode(secret_bytes).decode('utf-8')
-    return totp_secret
 
 #<----------------------------APIS--------------------------------------->
 # Login Endpoint
@@ -109,56 +69,45 @@ async def login(user: UserLogin):
                 users_table.c.username == user.username
             )
             
-            # Execute the query and fetch the result
-            result = session.execute(stmt).fetchone()
-            print(result)
-        
+            fetched_user = session.execute(stmt).fetchone() #returns the users row as a tuple
+            
         # Check if user exists
-        if result is None:
-            raise HTTPException(
-                status_code=401, 
-                detail={
-                    "status": "error",
-                    "message": "Invalid username or password"
-                }
-            )
+        if fetched_user is None:
+            raise HTTPException(status_code=401, detail={"message": "Invalid username or password"})
+        logger.info(fetched_user)
         
-        # Verify password
-        stored_password = result[1]  # Adjust index based on your table schema
-        if not bcrypt.checkpw(user.password.encode('utf-8'), stored_password.encode('utf-8')):
+        
+        stored_password = fetched_user.password.encode('utf-8') #getting pasword from db into the utf-8 format
+        totp_secret = fetched_user.totp_secret
+
+
+        #compare the passwords
+        if not bcrypt.checkpw(user.password.encode('utf-8'), stored_password):
             raise HTTPException(status_code=400, detail="Invalid username or password")
         
-        
-        totp_secret = result.totp_secret
+        #while signing up totp_secrte was not generated------>this wont happen since admin will be the one creating the user logins
         if not totp_secret:
             raise HTTPException(status_code=400, detail="TOTP secret not found.")
-
-        logger.info(f"TOTP secret retrieved: '{totp_secret}'")
-
-        # Validate TOTP secret
-        if len(totp_secret) % 8 != 0:  # Ensure padding is correct
-            raise HTTPException(status_code=400, detail="Invalid TOTP secret padding.")
 
         # Initialize TOTP
         totp = TOTP(totp_secret, interval=200)
         otp_code = totp.now()  # Generate the current TOTP code
 
         # Send the TOTP code via email
-        send_otp_via_email(result.email, otp_code)
-        logger.info(f"OTP sent to {result.email}.")
+        send_otp_via_email(fetched_user.email, otp_code)
+        logger.info(f"OTP sent to {fetched_user.email}.")
 
-        access_token = create_access_token(data={"sub": user.username})
+        #access_token = create_access_token(data={"sub": user.username})
 
         return {
             "status": "success",
-            "access_token": access_token,
-            "token_type": "bearer",
+            "message": "OTP sent, please verify 2FA.",
             "username": user.username
         }
 
     except Exception as e:
         logger.error(f"An error occurred during login: {str(e)}")
-        raise HTTPException(status_code=500, detail={"status": "error", "message": str(e)})
+        raise HTTPException(status_code=401, detail={"message": str(e)})
 
 
 @app.post("/verify-2fa")
@@ -199,6 +148,7 @@ async def verify_2fa(request: TwoFACodeRequest):
             "access_token": access_token,
             "token_type": "bearer",
         }
+    
     except HTTPException as http_ex:
         # Log and rethrow HTTP exceptions
         logger.error(f"HTTPException during 2FA verification: {str(http_ex)}")
@@ -209,7 +159,9 @@ async def verify_2fa(request: TwoFACodeRequest):
         raise HTTPException(status_code=500, detail={"status": "error", "message": str(e)})
 
 
+# <-----------workd--------------------->
 
+#works on postman, have to intergrate with frontend
 @app.post("/signup")
 async def add_user(user: UserCreate):
     print(user)
@@ -234,21 +186,8 @@ async def add_user(user: UserCreate):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# <-----------workd--------------------->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#works on postman, have to intergrate with frontend
 @app.post("/logout")
 async def logout(token: str = Depends(oauth2_scheme)):
     if not token:  # Check if there is a token
@@ -258,16 +197,19 @@ async def logout(token: str = Depends(oauth2_scheme)):
         # Attempt to decode the token
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         
-        # If successful, you can add additional logic here if necessary, like logging or invalidation logic
+        logger.info("logged out succesfully")
         return {"message": "Logged out successfully"}
+    
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
+    
     except jwt.DecodeError:
         raise HTTPException(status_code=403, detail="Invalid token")
+    
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=403, detail="Invalid token")
 
-
+#works on postman, have to intergrate with frontend
 @app.delete("/delete_user/{username}")
 async def delete_user(username: str):
     query = delete(users_table).where(users_table.c.username == username)
@@ -277,10 +219,8 @@ async def delete_user(username: str):
             raise HTTPException(status_code=404, detail="User not found")
     return {"message": "User deleted successfully"}
 
-
-# class TextInput(BaseModel):
-#     text: str
-
+#works on postman, have to intergrate with frontend
+#needs better system maintained dict, need a better solution instead of this api call
 @app.post('/profanity_detector')
 async def text_filter(input: str):
     if not input.text.strip():
@@ -288,37 +228,15 @@ async def text_filter(input: str):
 
     try:
         # Assuming profanity_detector returns cleaned text.
-        user_text = profanity_detector(input.text, foul_trie)
+        user_text = profanity_detector(input.text, FOUL_TRIE)
         print(user_text)
         return {"cleaned_text": user_text}
     except Exception:
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-# class Query(BaseModel):
-#     message: str
-
-
-llm=setup_model()
-
-# A connection manager to handle active WebSocket connections
-class ConnectionManager:
-    def __init__(self):
-        self.active_connections: List[WebSocket] = []
-
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
-        self.active_connections.append(websocket)
-
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
-
-    async def send_message(self, message: str):
-        for connection in self.active_connections:
-            await connection.send_text(message)
-
-manager = ConnectionManager()
-
+#works alright, need setup with redis porperly to only get the particular sessions chats
+#after the session is closed addthe chats to the history......think about how to scale this
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
@@ -326,13 +244,13 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             data = await websocket.receive_text()
             message = json.loads(data)
-            query = message.get("query")
+            new_chat_message = message.get("message")
 
             # Get LLM response
-            response = llm_response(query)
+            response = llm_response(new_chat_message)
 
             # Save query and response to Redis
-            await redis.lpush("chat_history", json.dumps({"query": query, "response": response}))
+            await redis.lpush("chat_history", json.dumps({"message": new_chat_message, "response": response}))
 
             # Send the response back to the client
             await websocket.send_text(json.dumps({"response": response}))
@@ -340,6 +258,8 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
+
+#temp api to read all redis storage
 @app.get("/chats/")
 async def get_chat_history():
     # Retrieve and return the last 20 chat messages from Redis
@@ -347,19 +267,6 @@ async def get_chat_history():
     return [json.loads(chat) for chat in chat_history]
 
 
-
-
-# @app.post("/chatbot/")
-# async def get_response(query: Query):
-#     response = llm_response(query.message, llm)
-#     return {"response": response}
-
-
-# @app.post('/ws'):
-
-
-
-
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    host_ip=os.getenv("HOST_IP")
+    uvicorn.run(app, host=host_ip, port=8000)
