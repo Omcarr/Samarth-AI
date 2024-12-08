@@ -21,8 +21,28 @@ def transcribe_audio_whisper(file_path):
         print(f"Error transcribing audio: {e}")
         return None
 
-# Example usage
-# api_key = "your_openai_api_key"
-# file_path = "path/to/your/audio.wav"
-# transcription = transcribe_audio_whisper(file_path, api_key)
-# print(transcription)
+
+# #try vosk
+
+# import wave
+# import json
+# from vosk import Model, KaldiRecognizer
+
+# # Load the model
+# model = Model("path_to_vosk_model")  # You need to download the appropriate Vosk model for your language
+
+# # Open the WAV file
+# wf = wave.open("your_audio.wav", "rb")
+# recognizer = KaldiRecognizer(model, wf.getframerate())
+
+# # Recognize speech from the audio file
+# result = ""
+# while True:
+#     data = wf.readframes(4000)
+#     if len(data) == 0:
+#         break
+#     if recognizer.AcceptWaveform(data):
+#         result = recognizer.Result()
+
+# # Parse and print the result
+# print(json.loads(result)["text"])

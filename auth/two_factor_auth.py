@@ -74,7 +74,7 @@ def generate_totp_secret():
     return totp_secret
 
 
-send_otp_via_sms(
-phone_number='+917045080926',
-otp='674537'
-)
+# send_otp_via_sms(
+# phone_number='+917045080926',
+# otp='674537'
+# )

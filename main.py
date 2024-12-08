@@ -12,7 +12,7 @@ from auth.validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
 
 import bcrypt, jwt, json,logging, uvicorn, os
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pyotp import TOTP
 
 from auth.two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret, send_otp_via_sms
@@ -21,18 +21,11 @@ from profanity.profantiy_detector import profanity_detector, build_trie
 from ws.ws_setup import WebSocketConnectionManager
 
 
-
+import json
+import aiohttp
 from voice_chat.whisper import transcribe_audio_whisper
 from pydub import AudioSegment
 import tempfile
-
-
-
-
-
-
-
-
 
 
 #db connection
@@ -108,7 +101,7 @@ async def login(user: UserLogin):
         otp_code = totp.now()  # Generate the current TOTP code
 
         # Send the TOTP code via email and sms
-        send_otp_via_sms(fetched_user.phone_number, otp_code)
+        #send_otp_via_sms(fetched_user.phone_number, otp_code)
         send_otp_via_email(fetched_user.email, otp_code)
         
         logger.info(f"OTP sent to {fetched_user.email}.")
@@ -252,75 +245,6 @@ async def text_filter(input: str):
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-#works alright, need setup with redis porperly to only get the particular sessions chats
-#after the session is closed addthe chats to the history......think about how to scale this
-# @app.websocket("/ws/chat")
-# async def websocket_endpoint(websocket: WebSocket):
-#     await manager.connect(websocket)
-#     try:
-#         while True:
-#             data = await websocket.receive_text()
-#             message = json.loads(data)
-#             new_chat_message = message.get("message")
-
-#             # Get LLM response
-#             response = llm_response(new_chat_message)
-
-#             # Save query and response to Redis
-#             await redis.lpush("chat_history", json.dumps({"message": new_chat_message, "response": response}))
-
-#             # Send the response back to the client
-#             await websocket.send_text(json.dumps({"response": response}))
-
-#     except WebSocketDisconnect:
-#         manager.disconnect(websocket)
-
-
-# #temp api to read all redis storage
-# @app.get("/chats/")
-# async def get_chat_history():
-#     # Retrieve and return the last 20 chat messages from Redis
-#     chat_history = await redis.lrange("chat_history", 0, 19)
-#     return [json.loads(chat) for chat in chat_history]
-
-
-@app.websocket("/ws/chat")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-
-    try:
-        token = websocket.headers.get("Authorization")
-        if token is None or not token.startswith("Bearer "):
-            raise WebSocketDisconnect(code=1008)
-
-        token = token.split(" ")[1]
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id = payload.get("sub")
-        if not user_id:
-            raise WebSocketDisconnect(code=1008)
-
-        redis_key = f"chat_history:{user_id}"
-
-        while True:
-            data = await websocket.receive_text()
-            message = json.loads(data).get("message")
-            response = llm_response(message)
-
-            # Save to Redis
-            await redis.lpush(redis_key, json.dumps({"message": message, "response": response}))
-            await redis.expire(redis_key, timedelta(hours=1))
-
-            await websocket.send_text(json.dumps({"response": response}))
-
-    except jwt.ExpiredSignatureError:
-        await websocket.close(code=1008, reason="Token expired.")
-    except jwt.DecodeError:
-        await websocket.close(code=1008, reason="Invalid token.")
-    except WebSocketDisconnect:
-        await websocket.close()
-        manager.disconnect(websocket)
-
-
 
 #to get users audio and get it transcribed from whisper model
 @app.post("/api/transcribe")
@@ -359,6 +283,263 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Error processing audio: {str(e)}")
         return JSONResponse(status_code=500, content={"message": f"Error processing audio: {e}"})
+
+
+
+
+
+#works alright, need setup with redis porperly to only get the particular sessions chats
+#after the session is closed addthe chats to the history......think about how to scale this
+# @app.websocket("/ws/chat")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await manager.connect(websocket)
+#     try:
+#         while True:
+#             data = await websocket.receive_text()
+#             message = json.loads(data)
+#             new_chat_message = message.get("message")
+
+#             # Get LLM response
+#             response = llm_response(new_chat_message)
+
+#             # Save query and response to Redis
+#             await redis.lpush("chat_history", json.dumps({"message": new_chat_message, "response": response}))
+
+#             # Send the response back to the client
+#             await websocket.send_text(json.dumps({"response": response}))
+
+#     except WebSocketDisconnect:
+#         manager.disconnect(websocket)
+
+
+# #temp api to read all redis storage
+# @app.get("/chats/")
+# async def get_chat_history():
+#     # Retrieve and return the last 20 chat messages from Redis
+#     chat_history = await redis.lrange("chat_history", 0, 19)
+#     return [json.loads(chat) for chat in chat_history]
+
+
+# @app.websocket("/ws/chat")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket.accept()
+
+#     try:
+#         token = websocket.headers.get("Authorization")
+#         if token is None or not token.startswith("Bearer "):
+#             raise WebSocketDisconnect(code=1008)
+
+#         token = token.split(" ")[1]
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         user_id = payload.get("sub")
+#         if not user_id:
+#             raise WebSocketDisconnect(code=1008)
+
+#         redis_key = f"chat_history:{user_id}"
+
+#         while True:
+#             data = await websocket.receive_text()
+#             message = json.loads(data).get("message")
+#             response = llm_response(message)
+
+#             # Save to Redis
+#             await redis.lpush(redis_key, json.dumps({"message": message, "response": response}))
+#             await redis.expire(redis_key, timedelta(hours=1))
+
+#             await websocket.send_text(json.dumps({"response": response}))
+
+#     except jwt.ExpiredSignatureError:
+#         await websocket.close(code=1008, reason="Token expired.")
+#     except jwt.DecodeError:
+#         await websocket.close(code=1008, reason="Invalid token.")
+#     except WebSocketDisconnect:
+#         await websocket.close()
+#         manager.disconnect(websocket)
+
+
+# @app.websocket("/ws/chat")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket.accept()
+#     redis_key = None  # Initialize redis_key with None
+
+#     try:
+#         logger.info("WebSocket connection initiated")
+
+#         # Log the received headers
+#         #logger.info(f"Received headers: {websocket.headers}")
+
+#         # Extract JWT token from headers
+#         token = websocket.headers.get("Authorization")  # Ensure this header is being sent
+        
+#         if not token or not token.startswith("Bearer "):
+#             await websocket.close(code=1008, reason="Missing or invalid token format.")
+#             logger.error("Missing or invalid token")
+#             return
+
+#         token = token.split(" ")[1]  # Correctly extract the token
+
+#         # Decode the JWT token
+#         try:
+#             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#             logger.info(f"Decoded JWT payload: {payload}")
+#         except jwt.ExpiredSignatureError:
+#             await websocket.close(code=1008, reason="Token expired.")
+#             logger.error("Token expired")
+#             return
+#         except jwt.InvalidTokenError as e:
+#             await websocket.close(code=1008, reason="Invalid token.")
+#             logger.error(f"JWT error: {str(e)}")
+#             return
+
+#         user_id = payload.get("sub")
+#         if not user_id:
+#             await websocket.close(code=1008, reason="Invalid user id.")
+#             logger.error("Invalid user ID in token")
+#             return
+
+#         logger.info(f"User {user_id} connected successfully")
+
+#         redis_key = f"chat_history:{user_id}"
+
+#         while True:
+#             try:
+#                 data = await websocket.receive_text()
+#                 logger.debug(f"Received message: {data}")
+
+#                 message = json.loads(data).get("message")
+
+#                 # Simulate response from LLM
+#                 response = 'lol'  # Mock response for testing
+
+#                 chat_entry = {
+#                     "timestamp": datetime.now().isoformat(),
+#                     "message": message,
+#                     "response": response
+#                 }
+#                 await redis.lpush(redis_key, json.dumps(chat_entry))
+#                 await redis.expire(redis_key, timedelta(hours=1))
+
+#                 await websocket.send_text(json.dumps({
+#                     "response": response,
+#                     "timestamp": chat_entry["timestamp"]
+#                 }))
+#                 logger.debug(f"Response sent: {response}")
+
+#             except Exception as e:
+#                 logger.error(f"Error during message processing: {str(e)}")
+#                 await websocket.close(code=1011, reason="Error during message processing")
+#                 break
+
+#     except WebSocketDisconnect:
+#         logger.info("Client disconnected from WebSocket")
+#         if redis_key:
+#             chat_history = await redis.lrange(redis_key, 0, -1)
+#             formatted_history = [json.loads(entry) for entry in chat_history]
+
+#             logger.log(formatted_history)
+
+#             await redis.delete(redis_key)
+
+#         await websocket.close()
+#         logger.info("WebSocket closed successfully")
+
+
+@app.websocket("/ws/chat")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    redis_key = None
+
+    try:
+        logger.info("WebSocket connection initiated")
+        logger.info(f"Received headers: {websocket.headers}")
+
+        # Extract JWT token from headers
+        token = websocket.headers.get("Authorization")
+        if token:
+            if not token.startswith("Bearer "):
+                await websocket.close(code=1008, reason="Missing or invalid token format.")
+                logger.error("Missing or invalid token format")
+                return
+            token = token.split(" ")[1]
+        else:
+            await websocket.close(code=1008, reason="Missing Authorization header.")
+            logger.error("Missing Authorization header")
+            return
+
+        # Decode JWT token
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            user_id = payload.get("sub")
+            if not user_id:
+                await websocket.close(code=1008, reason="Invalid user ID.")
+                logger.error("Invalid user ID in token")
+                return
+
+            logger.info(f"User {user_id} connected successfully")
+            redis_key = f"chat_history:{user_id}"
+
+        except jwt.ExpiredSignatureError:
+            await websocket.close(code=1008, reason="Token expired.")
+            logger.error("Token expired")
+            return
+        except jwt.InvalidTokenError as e:
+            await websocket.close(code=1008, reason="Invalid token.")
+            logger.error(f"JWT error: {str(e)}")
+            return
+
+        while True:
+            try:
+                data = await websocket.receive_text()
+                logger.debug(f"Received message: {data}")
+
+                message = json.loads(data).get("message")
+                response = 'lol'  # Simulated response for testing
+
+                chat_entry = {
+                    "timestamp": datetime.now().isoformat(),
+                    "user_message": message,
+                    "bot_response": response
+                }
+                await redis.lpush(redis_key, json.dumps(chat_entry))
+                await redis.expire(redis_key, timedelta(hours=1))
+
+                await websocket.send_text(json.dumps({
+                    "response": response,
+                    "timestamp": chat_entry["timestamp"]
+                }))
+                logger.debug(f"Response sent: {response}")
+
+            except (WebSocketDisconnect, json.JSONDecodeError) as e:
+                logger.info("Client disconnected or invalid JSON received")
+                break  # Exit the loop if the client disconnects or message is invalid
+            except Exception as e:
+                logger.error(f"Error during message processing: {str(e)}")
+                break  # Exit the loop on unexpected error
+
+    except WebSocketDisconnect:
+        logger.info("Client disconnected from WebSocket")
+        if redis_key:
+            chat_history = await redis.lrange(redis_key, 0, -1)
+
+            # Format and log chat history
+            formatted_history = []
+            for entry in chat_history:
+                chat_entry = json.loads(entry)
+                formatted_history.append(
+                    f"{chat_entry['timestamp']}: User: {chat_entry['user_message']}, Chatbot: {chat_entry['bot_response']}"
+                )
+
+            logger.info("Chat History:")
+            logger.info("\n".join(formatted_history))
+            await redis.delete(redis_key)
+
+        manager.disconnect(websocket)
+        logger.info("WebSocket closed successfully")
+
+
+
+
+
 
 
 

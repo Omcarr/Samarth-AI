@@ -16,3 +16,5 @@ class WebSocketConnectionManager:
     async def send_message(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
+    def is_connected(self, websocket: WebSocket) -> bool:
+        return websocket in self.active_connections
