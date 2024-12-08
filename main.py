@@ -1,6 +1,6 @@
-from fastapi import FastAPI, HTTPException, Depends, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Depends, WebSocket, WebSocketDisconnect, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.responses import JSONResponse
 
 from sqlalchemy import create_engine, MetaData, Table, insert, delete
 from sqlalchemy.exc import IntegrityError
@@ -8,18 +8,32 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 
 
-from validations import UserCreate, UserLogin, TwoFACodeRequest
+from auth.validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
 
-import bcrypt, jwt, json, base64, secrets,logging, uvicorn, os
-from typing import List
-from datetime import datetime, timedelta
+import bcrypt, jwt, json,logging, uvicorn, os
+from datetime import timedelta
 from pyotp import TOTP
 
-from two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret
-from llm_res import setup_model, llm_response
-from profantiy_detector import profanity_detector, build_trie, Trie
-from ws_setup import WebSocketConnectionManager
+from auth.two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret, send_otp_via_sms
+from llama3.llm_res import setup_model, llm_response
+from profanity.profantiy_detector import profanity_detector, build_trie
+from ws.ws_setup import WebSocketConnectionManager
+
+
+
+from voice_chat.whisper import transcribe_audio_whisper
+from pydub import AudioSegment
+import tempfile
+
+
+
+
+
+
+
+
+
 
 #db connection
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -93,8 +107,10 @@ async def login(user: UserLogin):
         totp = TOTP(totp_secret, interval=200)
         otp_code = totp.now()  # Generate the current TOTP code
 
-        # Send the TOTP code via email
+        # Send the TOTP code via email and sms
+        send_otp_via_sms(fetched_user.phone_number, otp_code)
         send_otp_via_email(fetched_user.email, otp_code)
+        
         logger.info(f"OTP sent to {fetched_user.email}.")
 
         #access_token = create_access_token(data={"sub": user.username})
@@ -219,6 +235,7 @@ async def delete_user(username: str):
             raise HTTPException(status_code=404, detail="User not found")
     return {"message": "User deleted successfully"}
 
+
 #works on postman, have to intergrate with frontend
 #needs better system maintained dict, need a better solution instead of this api call
 @app.post('/profanity_detector')
@@ -237,34 +254,114 @@ async def text_filter(input: str):
 
 #works alright, need setup with redis porperly to only get the particular sessions chats
 #after the session is closed addthe chats to the history......think about how to scale this
+# @app.websocket("/ws/chat")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await manager.connect(websocket)
+#     try:
+#         while True:
+#             data = await websocket.receive_text()
+#             message = json.loads(data)
+#             new_chat_message = message.get("message")
+
+#             # Get LLM response
+#             response = llm_response(new_chat_message)
+
+#             # Save query and response to Redis
+#             await redis.lpush("chat_history", json.dumps({"message": new_chat_message, "response": response}))
+
+#             # Send the response back to the client
+#             await websocket.send_text(json.dumps({"response": response}))
+
+#     except WebSocketDisconnect:
+#         manager.disconnect(websocket)
+
+
+# #temp api to read all redis storage
+# @app.get("/chats/")
+# async def get_chat_history():
+#     # Retrieve and return the last 20 chat messages from Redis
+#     chat_history = await redis.lrange("chat_history", 0, 19)
+#     return [json.loads(chat) for chat in chat_history]
+
+
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
-    await manager.connect(websocket)
+    await websocket.accept()
+
     try:
+        token = websocket.headers.get("Authorization")
+        if token is None or not token.startswith("Bearer "):
+            raise WebSocketDisconnect(code=1008)
+
+        token = token.split(" ")[1]
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if not user_id:
+            raise WebSocketDisconnect(code=1008)
+
+        redis_key = f"chat_history:{user_id}"
+
         while True:
             data = await websocket.receive_text()
-            message = json.loads(data)
-            new_chat_message = message.get("message")
+            message = json.loads(data).get("message")
+            response = llm_response(message)
 
-            # Get LLM response
-            response = llm_response(new_chat_message)
+            # Save to Redis
+            await redis.lpush(redis_key, json.dumps({"message": message, "response": response}))
+            await redis.expire(redis_key, timedelta(hours=1))
 
-            # Save query and response to Redis
-            await redis.lpush("chat_history", json.dumps({"message": new_chat_message, "response": response}))
-
-            # Send the response back to the client
             await websocket.send_text(json.dumps({"response": response}))
 
+    except jwt.ExpiredSignatureError:
+        await websocket.close(code=1008, reason="Token expired.")
+    except jwt.DecodeError:
+        await websocket.close(code=1008, reason="Invalid token.")
     except WebSocketDisconnect:
+        await websocket.close()
         manager.disconnect(websocket)
 
 
-#temp api to read all redis storage
-@app.get("/chats/")
-async def get_chat_history():
-    # Retrieve and return the last 20 chat messages from Redis
-    chat_history = await redis.lrange("chat_history", 0, 19)
-    return [json.loads(chat) for chat in chat_history]
+
+#to get users audio and get it transcribed from whisper model
+@app.post("/api/transcribe")
+async def transcribe_audio(audio: UploadFile = File(...)):
+    logger.info('Received audio file for transcription.')
+
+    try:
+        # Save the uploaded audio to a temporary file
+        temp_dir = tempfile.mkdtemp()
+        temp_audio_path = os.path.join(temp_dir, audio.filename)
+
+        with open(temp_audio_path, "wb") as f:
+            f.write(await audio.read())
+
+        # Convert audio file to WAV format (using Pydub)
+        audio_wav_path = os.path.join(temp_dir, "converted_audio.wav")
+        
+        # Load the uploaded file into Pydub
+        audio_segment = AudioSegment.from_file(temp_audio_path)
+        
+        # Export it as WAV format
+        audio_segment.export(audio_wav_path, format="wav")
+        
+        # Log the conversion
+        logger.info(f"Converted audio file saved as WAV: {audio_wav_path}")
+
+        # Now send the WAV file to the Whisper transcription function
+        transcription_result = transcribe_audio_whisper(audio_wav_path)
+
+        # Clean up the temporary files after processing
+        os.remove(temp_audio_path)
+        os.remove(audio_wav_path)
+
+        return JSONResponse(content={"transcription": transcription_result})
+    
+    except Exception as e:
+        logger.error(f"Error processing audio: {str(e)}")
+        return JSONResponse(status_code=500, content={"message": f"Error processing audio: {e}"})
+
+
+
 
 
 if __name__ == "__main__":

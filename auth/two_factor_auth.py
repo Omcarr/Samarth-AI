@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from twilio.rest import Client
 
 # SMTP details
 SMTP_SERVER = os.getenv("SMTP_SERVER")
@@ -15,6 +16,10 @@ SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 ALGORITHM = os.getenv("ENCRYPTION_ALGORITHM")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
+#twiilio details
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER =  os.getenv("TWILIO_PHONE_NUMBER")
 
 def send_otp_via_email(email:str , otp_code: str):
         # Create the email content
@@ -33,6 +38,24 @@ def send_otp_via_email(email:str , otp_code: str):
             server.login(SMTP_USERNAME, SMTP_PASSWORD)
             server.sendmail(SMTP_USERNAME, email, message.as_string())
 
+def send_otp_via_sms(phone_number:str, otp:str):
+
+    # Message content
+    message_body = f"Your OTP is: {otp}. Please use this to verify your identity for logging into the chatbot"
+
+    try:
+        # Initialize Twilio client
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+        # Send SMS
+        message = client.messages.create(
+            body=message_body,
+            from_=TWILIO_PHONE_NUMBER,
+            to=phone_number
+        )
+        return {"status": "success", "sid": message.sid}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 #creates a jwt token with validity of 30 mins and encodes it
 def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=30)):
@@ -49,3 +72,9 @@ def generate_totp_secret():
     # Encode to Base32
     totp_secret = base64.b32encode(secret_bytes).decode('utf-8')
     return totp_secret
+
+
+send_otp_via_sms(
+phone_number='+917045080926',
+otp='674537'
+)

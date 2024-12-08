@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 
 
-from validations import UserCreate, UserLogin, TwoFACodeRequest
+from auth.validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
 
 import bcrypt, jwt, json, base64, secrets, smtplib,logging,uvicorn
@@ -19,8 +19,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-from llm_res import setup_model, llm_response
-from profantiy_detector import profanity_detector, build_trie, Trie
+from llama3.llm_res import setup_model, llm_response
+from profanity.profantiy_detector import profanity_detector, build_trie, Trie
 
 #db setup
 DATABASE_URL = "postgresql://omkar:password@localhost/sih_testing"

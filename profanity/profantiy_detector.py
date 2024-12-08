@@ -1,5 +1,5 @@
 import difflib
-from profanity_db import english_dict, hindi_dict
+from profanity.profanity_db import english_dict, hindi_dict
 
 class TrieNode:
     def __init__(self):
