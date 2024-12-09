@@ -8,10 +8,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 
 
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+
 from auth.validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
 
-import bcrypt, jwt, json,logging, uvicorn, os
+import bcrypt, jwt, json,logging, uvicorn, os, uuid
 from datetime import datetime, timedelta
 from pyotp import TOTP
 
@@ -19,23 +21,22 @@ from auth.two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_
 from llama3.llm_res import setup_model, llm_response
 from profanity.profantiy_detector import profanity_detector, build_trie
 from ws.ws_setup import WebSocketConnectionManager
-
+from db_files.chat_history import save_chat_history
 
 import json
-import aiohttp
 from voice_chat.whisper import transcribe_audio_whisper
 from pydub import AudioSegment
 import tempfile
-
+import asyncio
 
 #db connection
 DATABASE_URL = os.getenv("DATABASE_URL")
-engine = create_engine(DATABASE_URL)
+engine=create_engine(DATABASE_URL, future=True) 
 metadata = MetaData()
-metadata.reflect(bind=engine)
+
 #db tables
 users_table = Table("users", metadata, autoload_with=engine)
-
+chat_history_table=Table("chat_history", metadata, autoload_with=engine)
 
 # Connect to Redis
 redis = aioredis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
@@ -58,11 +59,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#create objects of necessary classes
-FOUL_TRIE=build_trie()
-LOCAL_LLM=setup_model()
+# Create objects of necessary classes
+FOUL_TRIE = build_trie()
+LOCAL_LLM = setup_model()
 manager = WebSocketConnectionManager()
-
 
 #<----------------------------APIS--------------------------------------->
 # Login Endpoint
@@ -173,7 +173,6 @@ async def verify_2fa(request: TwoFACodeRequest):
 #works on postman, have to intergrate with frontend
 @app.post("/signup")
 async def add_user(user: UserCreate):
-    print(user)
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     
     totp_secret = generate_totp_secret()
@@ -229,19 +228,25 @@ async def delete_user(username: str):
     return {"message": "User deleted successfully"}
 
 
-
-#session wise redis- chat history storage. wehn a session is cleared it stores it into the mongodb
+#session wise redis- chat history storage. wehn a session is cleared it stores it into the postgres
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     redis_key = None
+    user_id = None
+    session_id = str(uuid.uuid4())
 
     try:
         logger.info("WebSocket connection initiated")
         logger.info(f"Received headers: {websocket.headers}")
-
+        logger.info(websocket.query_params.get("bot_mode", "1234"))
+        
         # Extract JWT token from headers
         token = websocket.headers.get("Authorization")
+        #logger.info(token)
+
+        token = websocket.query_params.get("Authorization")
+        #logger.info(token)
         if token:
             if not token.startswith("Bearer "):
                 await websocket.close(code=1008, reason="Missing or invalid token format.")
@@ -264,7 +269,9 @@ async def websocket_endpoint(websocket: WebSocket):
 
             logger.info(f"User {user_id} connected successfully")
             redis_key = f"chat_history:{user_id}"
+            bot_mode= websocket.query_params.get("bot_mode", "default")
             logger.info(redis_key)
+            logger.info(bot_mode)
 
 
         except jwt.ExpiredSignatureError:
@@ -278,32 +285,41 @@ async def websocket_endpoint(websocket: WebSocket):
 
         while True:
             try:
+                # Wait for a single message
                 data = await websocket.receive_text()
-                #logger.info(f"Received message: {data}")
-
-                message = json.loads(data).get("query")
+                message_data = json.loads(data)
+                logger.info(message_data)
                 
-                #code for getting the response from model should be here
-                response = await llm_response(message, LOCAL_LLM ) # Simulated response for testing
-
+                # Extract message and bot mode
+                message = message_data.get("message")
+                bot_mode = message_data.get("bot_mode", "default")
+                
+                # Get response from LLM
+                response = await llm_response(message, LOCAL_LLM)
+                
+                # Prepare chat entry
                 chat_entry = {
                     "timestamp": datetime.now().isoformat(),
                     "user_message": message,
-                    "bot_response": response
-                }               
-
+                    "bot_response": response,
+                    "user_id": user_id,
+                    "bot_mode": bot_mode,
+                    "session_id": session_id
+                }
+                
+                # Store in Redis
                 await redis.lpush(redis_key, json.dumps(chat_entry))
                 await redis.expire(redis_key, timedelta(hours=1))
-
-                # chat_history = await redis.lrange(redis_key, 0, -1)
-                # logger.info(json.dumps(chat_history, indent=4))
-
+                
+                # Send response back
                 await websocket.send_text(json.dumps({
                     "response": response,
-                    "timestamp": chat_entry["timestamp"]
+                    "timestamp": chat_entry["timestamp"],
+                    "bot_mode": bot_mode
                 }))
-
-                logger.debug(f"Response sent: {response}")
+                
+                #logger.debug(f"Response sent: {response}")
+            
 
             except WebSocketDisconnect:
                 logger.info("Client disconnected from WebSocket")
@@ -316,32 +332,23 @@ async def websocket_endpoint(websocket: WebSocket):
                 break  # Exit the loop on unexpected error
 
     finally:
-
-
-        #instead f=of printing integrate this with mongo for better retrival
         if redis_key:
             chat_history = await redis.lrange(redis_key, 0, -1)
 
             # Format and log chat history
             formatted_history = []
-            for entry in chat_history:
-                chat_entry = json.loads(entry)
-                user_message = chat_entry.get("user_message", "N/A")  # Default to "N/A" for null
-                bot_response = chat_entry.get("bot_response", "N/A")  # Default to "N/A" for null
-                timestamp = chat_entry.get("timestamp", "N/A")  # Default to "N/A" for missing timestamp
+            # for entry in chat_history:
+            #     chat_entry = json.loads(entry)
+            #     user_message = chat_entry.get("user_message", "N/A")  # Default to "N/A" for null
+            #     bot_response = chat_entry.get("bot_response", "N/A")  # Default to "N/A" for null
+            #     timestamp = chat_entry.get("timestamp", "N/A")  # Default to "N/A" for missing timestamp
                 
-                formatted_history.append(
-                    f"{timestamp}: User: {user_message}, Chatbot: {bot_response}"
-                )
-
-            logger.info("Chat History:")
-            logger.info("\n".join(formatted_history))
-            await redis.delete(redis_key)
-
-            chat_history = await redis.lrange(redis_key, 0, -1)
-            logger.info('after session is refreshed')
-            logger.info(chat_history)
-
+            #     formatted_history.append(
+            #         f"{timestamp}: User: {user_message}, Chatbot: {bot_response}"
+            #     )
+            chat_history=json.dumps(chat_history, indent=4)
+            #logger.info(chat_history)
+            #await save_chat_history(redis, redis_key, SessionLocal, chat_history_table, user_id, logger)
 
         manager.disconnect(websocket)
         logger.info("WebSocket closed successfully")
@@ -398,11 +405,20 @@ async def transcribe_audio(audio: UploadFile = File(...)):
         os.remove(temp_audio_path)
         os.remove(audio_wav_path)
 
+        logger.info(transcription_result)
+
         return JSONResponse(content={"transcription": transcription_result})
     
     except Exception as e:
         logger.error(f"Error processing audio: {str(e)}")
         return JSONResponse(status_code=500, content={"message": f"Error processing audio: {e}"})
+
+
+
+#api for resending the otp---> send username based on it send the otp again
+
+
+
 
 
 

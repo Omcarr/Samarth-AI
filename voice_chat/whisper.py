@@ -1,7 +1,7 @@
 import openai
 import os
 
-
+#may be usable
 api_key= os.getenv("OPENAI_API_KEY")
 
 def transcribe_audio_whisper(file_path):
