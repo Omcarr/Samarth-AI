@@ -21,7 +21,7 @@ class VectorDatabase:
                             chroma_server_http_port=8000)
                     )
         
-        self.collection = await self.chroma_client.get_or_create_collection(name="test")
+        self.collection = await self.chroma_client.get_or_create_collection(name="prod")
         
 
     

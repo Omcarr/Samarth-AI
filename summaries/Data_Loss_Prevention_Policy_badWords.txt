@@ -1,0 +1,39 @@
+Here is a concise summary of the Data Loss Prevention (DLP) policy for CyberSecure Systems Ltd.:
+
+**Purpose:** Protect restricted, confidential, and sensitive data from loss to avoid reputation damage and adverse impacts on customers.
+
+**Core Components:**
+
+1. DLP for Endpoints (desktops, laptops, USB storage, virtual desktops)
+2. DLP at Rest (server or database structured data)
+3. DLP for Network (data transmission to the Internet)
+
+**Employee Requirements:**
+
+* Complete security awareness training and agree to IT acceptable use policy
+* Keep a clean desk and ensure printed data is not left unattended
+* Use a secure password and do not share it with others
+* Return all official records upon termination
+* Notify authorities immediately in case of lost or unauthorized data
+* Report any suspected non-compliance
+
+**DLP Events:**
+
+* Alert users of suspected data transmission and allow authorization or rejection
+* Log incidents centrally for review and escalation to business stakeholders as needed
+* Restrict access to DLP events to named individuals to protect employee privacy
+
+**Endpoints and Workstations:**
+
+* Full disk encryption enabled on all devices
+* Mandatorily sign and accept GAIL's Acceptable IT Use Policy (AIUP)
+* Encryption policy must be managed and validated by the IT department
+
+**Common Security Best Practices:**
+
+1. Regularly update software to patch critical vulnerabilities
+2. Avoid default passwords and share sensitive data over unencrypted channels
+3. Rely on updated antivirus software and ignore phishing awareness training for employees
+4. Do not ignore regular system updates and backup data frequently.
+
+By following this policy, CyberSecure Systems Ltd. aims to prevent data loss and ensure the confidentiality, integrity, and availability of sensitive data.

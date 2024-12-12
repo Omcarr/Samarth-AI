@@ -33,6 +33,7 @@ import functools
 
 from redis import Redis
 from sqlalchemy.exc import SQLAlchemyError
+from pdf2image import convert_from_bytes
 
 # #make the llm coversational using lanchains
 # from groq import Groq
@@ -48,8 +49,8 @@ from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
-
-
+import pytesseract
+from PIL import Image
 
 #db connection
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -57,6 +58,7 @@ engine=create_engine(DATABASE_URL, future=True)
 metadata = MetaData()
 Base = declarative_base()
 
+SYSTEM_DICT_FILE="system_dict.txt"
 
 #db tables
 users_table = Table("users", metadata, autoload_with=engine)
@@ -571,6 +573,7 @@ async def transcribe_audio(audio: UploadFile = File(...)):
         os.remove(audio_wav_path)
 
         logger.info(transcription_result)
+        print(transcription_result)
 
         return JSONResponse(content={"transcription": transcription_result})
     
@@ -869,10 +872,6 @@ def fetch_pinned_chats(username):
 
 
 
-
-
-
-
 #patils code
 import os
 from fastapi import FastAPI, WebSocket, File, UploadFile,  Form, HTTPException
@@ -904,7 +903,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
-groq_api = "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"
+groq_api = "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"
 
 async def stream_generate_async(messages):
     client = Groq(api_key = groq_api)
@@ -921,18 +920,60 @@ async def stream_generate_async(messages):
         yield chunk.choices[0].delta.content or ""
         await asyncio.sleep(0)
 
-# def generate_async(messages):
-#     client = Groq(api_key = groq_api)
-#     completion = client.chat.completions.create(
-#         model="gemma2-9b-it",
-#         messages=messages,
-#         temperature=0.4,
-#         max_tokens=1024,
-#         top_p=0.9,
-#         stream=False,
-#         stop=None,
-#     )
-#     return completion.choices[0].message.content
+def generate_async(messages):
+    client = Groq(api_key = groq_api)
+    completion = client.chat.completions.create(
+        model="gemma2-9b-it",
+        messages=messages,
+        temperature=0.4,
+        max_tokens=1024,
+        top_p=0.9,
+        stream=False,
+        stop=None,
+    )
+    print("test99")
+    return completion.choices[0].message.content
+
+def formatter(msg):
+    prompt = """Format the following text to make it more readable:
+
+        {unformatted_text}
+
+        Please apply the following formatting:
+        - Use **bold** for key terms
+        - Use *italic* for important concepts
+        - Add bullet points where appropriate
+        - Improve overall structure and readability
+        - Make the text more engaging
+    """
+
+
+    prompt = prompt.format(unformatted_text= msg)
+    messages=[
+        {
+            "role": "system",
+            "content": """
+                You are a helpful chatbot that formats the text given by the user in markdown format.
+            """
+        },
+        {
+            "role": "user",
+            "content": prompt,
+        }
+    ]
+    client = Groq(api_key = groq_api)
+    completion = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=messages,
+        temperature=0.4,
+        max_tokens=4096,
+        top_p=0.9,
+        stream=True,
+        stop=None,
+    )
+
+    return completion.choices[0].message.content
+    
 
 query_format = """
 Question: 
@@ -954,6 +995,8 @@ async def websocket_askpdf(websocket: WebSocket):
             print(str(query))
             query = question.get("message")
             print(query)
+
+           #query_in_time=datetime.now()
             file_data = question.get("file")
             if file_data:
                 file_content = base64.b64decode(file_data["content"])
@@ -961,11 +1004,32 @@ async def websocket_askpdf(websocket: WebSocket):
                 file_type = file_data["type"]
                 if file_type == 'application/pdf':
                     pdf_file = io.BytesIO(file_content)
-                    text = ""
+                    image=Image.open(pdf_file)
+                    # text = pytesseract.image_to_string(image)
+                    text =""
                     with pdfplumber.open(pdf_file) as pdf:
                         for page in pdf.pages:
                             text += page.extract_text() or ""  # handle empty pages
                         print("PDF content:", text)
+                # files_folder = 'files'
+                # os.makedirs(files_folder, exist_ok=True)  # Create folder if it doesn't exist
+
+                # if file_type == 'application/pdf':
+                #     # Save the PDF to the 'files' folder
+                #     pdf_path = os.path.join(files_folder, file_name)
+                #     with open(pdf_path, 'wb') as f:
+                #         f.write(file_content)
+
+                #     # Convert PDF to images
+                #     images = convert_from_bytes(file_content)
+                #     text = ''
+
+                #     # Extract text from each image using Tesseract
+                #     for image in images:
+                #         text += pytesseract.image_to_string(image)
+
+                    print("Extracted text from PDF:", text)
+
 
                 prompt = query_format.format(question=query, context=text)
                 messages=[
@@ -993,27 +1057,56 @@ async def websocket_askpdf(websocket: WebSocket):
 
                 continue
 
-            # file_names = os.listdir('/files')
-            # files_string = '\n'.join(file_names)
+            print("test")
+            file_names = os.listdir('./summaries/')
+            print("test 3")
+            print(file_names)
+            files_paths = '\n'.join(file_names)
+            print("test 4")
+            print(files_paths)
+
+            if "bullet" in query:
+                with open("summaries/Data_Loss_Prevention_Policy_badWords.txt", 'r') as file:
+                    content = file.read()
+                    await websocket.send_text(content)
+
+            elif "summary" in query.lower() or "summarize" in query.lower() or "summarise" in query.lower():
+                sysprompt = '''You are an intelligent query routing system that determines the correct file path for the given query.
+                    Here are the file paths of the pdfs:
+                    {file_paths}\n
+                    The output should be just one word: the appropriate file_path.
+                    '''
+                print("test 6")
+                sysprompt = sysprompt.format(file_paths=files_paths)
+                print("test 5")
+                messages=[
+                    {
+                        "role": "system",
+                        "content": sysprompt
+                    },
+                    {
+                        "role": "user",
+                        "content": query,
+                    }
+                ]
+                print("test2")
+                mode = generate_async(messages).strip()
+                print(mode)
+                
+                if mode.endswith(".txt"):
+                    mode = mode[:-4]
+                
+                with open(f'./summaries/{mode}.txt', 'r') as file:
+                    content = file.read()
+                    await websocket.send_text(content)
+                
+            else:
+                # ansformat= await model.llm_response(query=query)
+                await websocket.send_text(await model.llm_response(query=query))
             
-            # message=[
-            #     {
-            #         "role": "system",
-            #         "content": """
-            #         """
-            #     },
-            #     {
-            #         "role": "user",
-            #         "content": prompt,
-            #     }
-            # ]
-
-
-            # if mode == "summary":
-            #     print("")
-
-            await websocket.send_text(await model.llm_response(query=query))
-
+            # async for chunk in formatter(ansformat):
+            #     await websocket.send_text(chunk)
+        
 
     except Exception as e:
         await websocket.send_json({
@@ -1041,7 +1134,7 @@ async def upload_documents(documents: List[UploadFile] = File(...)):
             "saved_path": str(file_path)
         })
 
-        await model.add_document(file_path=UPLOAD_DIR, file_name=upload_file.filename)
+        await model.add_document(file_path=f'{UPLOAD_DIR}/{upload_file.filename}', file_name=upload_file.filename)
 
 
     return {
@@ -1050,14 +1143,28 @@ async def upload_documents(documents: List[UploadFile] = File(...)):
     }
 
 
+@app.post('/system_dict')
+def AddWordToSystemDict(word):
+    #add to system dict txt file
+    if not word:
+        raise HTTPException(status_code=400, detail="Word cannot be empty")
+    print(word)
+    print(SYSTEM_DICT_FILE)
+    # Ensure the dictionary file exists
+    if not os.path.exists(SYSTEM_DICT_FILE):
+        with open(SYSTEM_DICT_FILE, "w") as file:
+            pass  # Create the file if it doesn't exist
 
+    # Check if the word already exists in the dictionary
+    with open(SYSTEM_DICT_FILE, "r") as file:
+        if word in (line.strip() for line in file):
+            return {'message':f'{word} already exists'}
 
+    # Append the word to the dictionary
+    with open(SYSTEM_DICT_FILE, "a") as file:
+        file.write(f"{word}\n")
 
-
-
-
-
-
+    return {"message": f"Word '{word}' added to system dictionary successfully"}
 
 
 
