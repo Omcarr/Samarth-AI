@@ -1,0 +1,599 @@
+[33mWARNING[0m:  [12-12-2024 09:00:16] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:00:16] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:00:16] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:00:16] Started server process [[36m275712[0m]
+[32mINFO[0m:     [12-12-2024 09:00:16] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:00:16] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:00:16] Uvicorn running on [1mhttp://localhost:1234[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [12-12-2024 09:00:55] Shutting down
+[32mINFO[0m:     [12-12-2024 09:00:55] Waiting for application shutdown.
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component System
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component SegmentAPI
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:00:55] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [12-12-2024 09:00:55] Application shutdown complete.
+[32mINFO[0m:     [12-12-2024 09:00:55] Finished server process [[36m275712[0m]
+[33mWARNING[0m:  [12-12-2024 09:01:11] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:01:12] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:01:12] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:01:12] Started server process [[36m276460[0m]
+[32mINFO[0m:     [12-12-2024 09:01:12] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:01:12] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:01:12] Uvicorn running on [1mhttp://localhost:1234[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [12-12-2024 09:03:21] Shutting down
+[32mINFO[0m:     [12-12-2024 09:03:21] Waiting for application shutdown.
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component System
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component SegmentAPI
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:03:21] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [12-12-2024 09:03:21] Application shutdown complete.
+[32mINFO[0m:     [12-12-2024 09:03:21] Finished server process [[36m276460[0m]
+[33mWARNING[0m:  [12-12-2024 09:03:48] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:03:48] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:03:48] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:03:48] Started server process [[36m278108[0m]
+[32mINFO[0m:     [12-12-2024 09:03:48] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:03:48] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:03:48] Uvicorn running on [1mhttp://localhost:1234[0m (Press CTRL+C to quit)
+[33mWARNING[0m:  [12-12-2024 09:08:50] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:08:50] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:08:50] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:08:50] Started server process [[36m281545[0m]
+[32mINFO[0m:     [12-12-2024 09:08:50] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:08:50] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:08:50] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[33mWARNING[0m:  [12-12-2024 09:10:05] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:10:06] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:10:06] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:10:06] Started server process [[36m282925[0m]
+[32mINFO[0m:     [12-12-2024 09:10:06] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:10:06] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:10:06] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [12-12-2024 09:11:00] 127.0.0.1:48856 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:00] 127.0.0.1:48856 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:00] 127.0.0.1:48856 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:00] 127.0.0.1:48856 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:42] 127.0.0.1:33186 - "GET /api/v2/pre-flight-checks HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:11:42] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [12-12-2024 09:11:42] 127.0.0.1:33186 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/add HTTP/1.1" 201
+[32mINFO[0m:     [12-12-2024 09:11:54] 127.0.0.1:49276 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:54] 127.0.0.1:49276 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:54] 127.0.0.1:49276 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:11:54] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:11:54] 127.0.0.1:49276 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:11:54] 127.0.0.1:49276 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[33mWARNING[0m:  [12-12-2024 09:32:36] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048576. chroma_server_nofile will not be set.
+[32mINFO[0m:     [12-12-2024 09:32:36] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component System
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component SqliteDB
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component Posthog
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component LocalExecutor
+[36mDEBUG[0m:    [12-12-2024 09:32:36] Starting component SegmentAPI
+[32mINFO[0m:     [12-12-2024 09:32:36] Started server process [[36m293963[0m]
+[32mINFO[0m:     [12-12-2024 09:32:36] Waiting for application startup.
+[32mINFO[0m:     [12-12-2024 09:32:36] Application startup complete.
+[32mINFO[0m:     [12-12-2024 09:32:36] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [12-12-2024 09:32:48] 127.0.0.1:56118 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:32:48] 127.0.0.1:56118 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:32:48] 127.0.0.1:56118 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:32:48] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:32:48] 127.0.0.1:56118 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:32:49] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [12-12-2024 09:32:49] 127.0.0.1:56118 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:13] 127.0.0.1:33662 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:13] 127.0.0.1:33662 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:13] 127.0.0.1:33662 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:36:13] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:36:13] 127.0.0.1:33662 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:13] 127.0.0.1:33662 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:18] 127.0.0.1:33662 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:18] 127.0.0.1:33662 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:18] 127.0.0.1:33662 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:36:18] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:36:18] 127.0.0.1:33662 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:18] 127.0.0.1:33662 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:42] 127.0.0.1:41766 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:42] 127.0.0.1:41766 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:42] 127.0.0.1:41766 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:36:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:36:42] 127.0.0.1:41766 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:42] 127.0.0.1:41766 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:45] 127.0.0.1:41766 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:45] 127.0.0.1:41766 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:45] 127.0.0.1:41766 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:36:45] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:36:45] 127.0.0.1:41766 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:36:45] 127.0.0.1:41766 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:11] 127.0.0.1:60080 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:11] 127.0.0.1:60080 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:11] 127.0.0.1:60080 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:37:11] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:37:11] 127.0.0.1:60080 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:11] 127.0.0.1:60080 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:25] 127.0.0.1:42786 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:25] 127.0.0.1:42786 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:25] 127.0.0.1:42786 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:37:25] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:37:25] 127.0.0.1:42786 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:37:25] 127.0.0.1:42786 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:39:09] 127.0.0.1:34136 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:39:09] 127.0.0.1:34136 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:39:09] 127.0.0.1:34136 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:39:09] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:39:09] 127.0.0.1:34136 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:39:09] 127.0.0.1:34136 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:40:34] 127.0.0.1:50968 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:40:34] 127.0.0.1:50968 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:40:34] 127.0.0.1:50968 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:40:34] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:40:34] 127.0.0.1:50968 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:40:34] 127.0.0.1:50968 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:41:33] 127.0.0.1:35438 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:41:33] 127.0.0.1:35438 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:41:33] 127.0.0.1:35438 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:41:33] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:41:33] 127.0.0.1:35438 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:41:33] 127.0.0.1:35438 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:42:06] 127.0.0.1:42172 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:42:06] 127.0.0.1:42172 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:42:06] 127.0.0.1:42172 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:42:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:42:06] 127.0.0.1:42172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:42:06] 127.0.0.1:42172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:49:42] 127.0.0.1:47146 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:49:42] 127.0.0.1:47146 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:49:42] 127.0.0.1:47146 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:49:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:49:42] 127.0.0.1:47146 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:49:42] 127.0.0.1:47146 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:56:59] 127.0.0.1:39024 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:56:59] 127.0.0.1:39024 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:56:59] 127.0.0.1:39024 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:56:59] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:56:59] 127.0.0.1:39024 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:56:59] 127.0.0.1:39024 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:57:40] 127.0.0.1:39342 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:57:40] 127.0.0.1:39342 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:57:40] 127.0.0.1:39342 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:57:40] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:57:40] 127.0.0.1:39342 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:57:40] 127.0.0.1:39342 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:58:05] 127.0.0.1:41158 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:58:05] 127.0.0.1:41158 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:58:05] 127.0.0.1:41158 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 09:58:05] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 09:58:05] 127.0.0.1:41158 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 09:58:05] 127.0.0.1:41158 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:03:13] 127.0.0.1:52128 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:03:13] 127.0.0.1:52128 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:03:13] 127.0.0.1:52128 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:03:13] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:03:13] 127.0.0.1:52128 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:03:15] 127.0.0.1:52128 - "GET /api/v2/pre-flight-checks HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:03:15] 127.0.0.1:52128 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/add HTTP/1.1" 201
+[32mINFO[0m:     [12-12-2024 10:04:44] 127.0.0.1:46012 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:04:44] 127.0.0.1:46012 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:04:44] 127.0.0.1:46012 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:04:44] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:04:44] 127.0.0.1:46012 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:04:44] 127.0.0.1:46012 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:15] 127.0.0.1:55934 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:15] 127.0.0.1:55934 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:15] 127.0.0.1:55934 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:05:15] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:05:15] 127.0.0.1:55934 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:15] 127.0.0.1:55934 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:41] 127.0.0.1:57746 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:41] 127.0.0.1:57746 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:41] 127.0.0.1:57746 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:05:41] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:05:41] 127.0.0.1:57746 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:42] 127.0.0.1:57746 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:48] 127.0.0.1:60534 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:48] 127.0.0.1:60534 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:48] 127.0.0.1:60534 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:05:48] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:05:48] 127.0.0.1:60534 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:48] 127.0.0.1:60534 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:55] 127.0.0.1:44262 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:55] 127.0.0.1:44262 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:55] 127.0.0.1:44262 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:05:55] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:05:55] 127.0.0.1:44262 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:05:55] 127.0.0.1:44262 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:06] 127.0.0.1:50726 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:06] 127.0.0.1:50726 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:06] 127.0.0.1:50726 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:06:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:06:06] 127.0.0.1:50726 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:06] 127.0.0.1:50726 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:36] 127.0.0.1:56520 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:36] 127.0.0.1:56520 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:36] 127.0.0.1:56520 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:06:36] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:06:36] 127.0.0.1:56520 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:06:36] 127.0.0.1:56520 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:12:12] 127.0.0.1:49376 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:12:12] 127.0.0.1:49376 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:12:12] 127.0.0.1:49376 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:12:12] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:12:12] 127.0.0.1:49376 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:12:12] 127.0.0.1:49376 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:17:49] 127.0.0.1:54748 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:17:49] 127.0.0.1:54748 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:17:49] 127.0.0.1:54748 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:17:49] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:17:49] 127.0.0.1:54748 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:17:49] 127.0.0.1:54748 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:18:49] 127.0.0.1:47734 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:18:49] 127.0.0.1:47734 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:18:49] 127.0.0.1:47734 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:18:49] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:18:49] 127.0.0.1:47734 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:18:49] 127.0.0.1:47734 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:21:42] 127.0.0.1:33592 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:21:42] 127.0.0.1:33592 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:21:42] 127.0.0.1:33592 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:21:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:21:42] 127.0.0.1:33592 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:21:42] 127.0.0.1:33592 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:22:23] 127.0.0.1:37586 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:22:23] 127.0.0.1:37586 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:22:23] 127.0.0.1:37586 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:22:23] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:22:23] 127.0.0.1:37586 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:22:23] 127.0.0.1:37586 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:23:22] 127.0.0.1:60938 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:23:22] 127.0.0.1:60938 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:23:22] 127.0.0.1:60938 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:23:22] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:23:22] 127.0.0.1:60938 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:23:23] 127.0.0.1:60938 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:24:29] 127.0.0.1:35616 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:24:29] 127.0.0.1:35616 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:24:29] 127.0.0.1:35616 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:24:29] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:24:29] 127.0.0.1:35616 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:24:29] 127.0.0.1:35616 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:25:06] 127.0.0.1:55218 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:25:06] 127.0.0.1:55218 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:25:06] 127.0.0.1:55218 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:25:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:25:06] 127.0.0.1:55218 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:25:06] 127.0.0.1:55218 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:26:10] 127.0.0.1:53040 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:26:10] 127.0.0.1:53040 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:26:10] 127.0.0.1:53040 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:26:10] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:26:10] 127.0.0.1:53040 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:26:10] 127.0.0.1:53040 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:27:56] 127.0.0.1:42832 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:27:56] 127.0.0.1:42832 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:27:56] 127.0.0.1:42832 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:27:56] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:27:56] 127.0.0.1:42832 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:27:56] 127.0.0.1:42832 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:28:12] 127.0.0.1:57754 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:28:12] 127.0.0.1:57754 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:28:12] 127.0.0.1:57754 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:28:12] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:28:12] 127.0.0.1:57754 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:28:12] 127.0.0.1:57754 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:30:39] 127.0.0.1:37734 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:30:39] 127.0.0.1:37734 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:30:39] 127.0.0.1:37734 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:30:39] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:30:39] 127.0.0.1:37734 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:30:39] 127.0.0.1:37734 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:45] 127.0.0.1:54378 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:45] 127.0.0.1:54378 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:45] 127.0.0.1:54378 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:31:45] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:31:45] 127.0.0.1:54378 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:45] 127.0.0.1:54378 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:55] 127.0.0.1:48850 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:55] 127.0.0.1:48850 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:55] 127.0.0.1:48850 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:31:55] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:31:55] 127.0.0.1:48850 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:31:56] 127.0.0.1:48850 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:53] 127.0.0.1:56350 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:53] 127.0.0.1:56350 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:53] 127.0.0.1:56350 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:32:53] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:32:53] 127.0.0.1:56350 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:53] 127.0.0.1:56350 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:55] 127.0.0.1:56350 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:55] 127.0.0.1:56350 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:55] 127.0.0.1:56350 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:32:55] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:32:55] 127.0.0.1:56350 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:32:55] 127.0.0.1:56350 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:07] 127.0.0.1:42000 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:07] 127.0.0.1:42000 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:07] 127.0.0.1:42000 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:33:07] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:33:07] 127.0.0.1:42000 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:07] 127.0.0.1:42000 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:33] 127.0.0.1:44434 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:33] 127.0.0.1:44434 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:33] 127.0.0.1:44434 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:33:33] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:33:33] 127.0.0.1:44434 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:33:33] 127.0.0.1:44434 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:35:42] 127.0.0.1:53618 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:35:42] 127.0.0.1:53618 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:35:42] 127.0.0.1:53618 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:35:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:35:42] 127.0.0.1:53618 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:35:43] 127.0.0.1:53618 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:01] 127.0.0.1:56584 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:01] 127.0.0.1:56584 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:01] 127.0.0.1:56584 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:36:01] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:36:01] 127.0.0.1:56584 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:01] 127.0.0.1:56584 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:05] 127.0.0.1:56584 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:05] 127.0.0.1:56584 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:05] 127.0.0.1:56584 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:36:05] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:36:05] 127.0.0.1:56584 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:05] 127.0.0.1:56584 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:11] 127.0.0.1:42236 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:11] 127.0.0.1:42236 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:11] 127.0.0.1:42236 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:36:11] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:36:11] 127.0.0.1:42236 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:12] 127.0.0.1:42236 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:36:32] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:36:32] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:36:32] 127.0.0.1:42142 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:42] 127.0.0.1:40506 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:42] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:42] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:37:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:37:42] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:42] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:37:43] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:37:43] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:37:43] 127.0.0.1:40506 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:38:11] 127.0.0.1:44288 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:38:11] 127.0.0.1:44288 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:38:11] 127.0.0.1:44288 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:38:11] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:38:11] 127.0.0.1:44288 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:38:11] 127.0.0.1:44288 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:45:44] 127.0.0.1:33854 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:45:44] 127.0.0.1:33854 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:45:44] 127.0.0.1:33854 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:45:44] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:45:44] 127.0.0.1:33854 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:45:44] 127.0.0.1:33854 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:46:41] 127.0.0.1:46674 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:46:41] 127.0.0.1:46674 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:46:41] 127.0.0.1:46674 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:46:41] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:46:41] 127.0.0.1:46674 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:46:41] 127.0.0.1:46674 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:48:08] 127.0.0.1:56564 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:48:08] 127.0.0.1:56564 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:48:08] 127.0.0.1:56564 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:48:08] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:48:08] 127.0.0.1:56564 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:48:08] 127.0.0.1:56564 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:58:39] 127.0.0.1:53298 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:58:39] 127.0.0.1:53298 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:58:39] 127.0.0.1:53298 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 10:58:39] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 10:58:39] 127.0.0.1:53298 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 10:58:39] 127.0.0.1:53298 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:00:50] 127.0.0.1:39830 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:00:50] 127.0.0.1:39830 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:00:50] 127.0.0.1:39830 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:00:50] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:00:50] 127.0.0.1:39830 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:00:50] 127.0.0.1:39830 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:04:00] 127.0.0.1:40900 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:04:00] 127.0.0.1:40900 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:04:00] 127.0.0.1:40900 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:04:00] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:04:00] 127.0.0.1:40900 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:04:00] 127.0.0.1:40900 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:14:31] 127.0.0.1:50348 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:14:31] 127.0.0.1:50348 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:14:31] 127.0.0.1:50348 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:14:31] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:14:31] 127.0.0.1:50348 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:14:31] 127.0.0.1:50348 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:06] 127.0.0.1:41086 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:06] 127.0.0.1:41086 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:06] 127.0.0.1:41086 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:16:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:16:06] 127.0.0.1:41086 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:06] 127.0.0.1:41086 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:56] 127.0.0.1:37324 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:56] 127.0.0.1:37324 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:56] 127.0.0.1:37324 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:16:56] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:16:56] 127.0.0.1:37324 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:16:56] 127.0.0.1:37324 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:17:42] 127.0.0.1:53568 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:17:42] 127.0.0.1:53568 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:17:42] 127.0.0.1:53568 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:17:42] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:17:42] 127.0.0.1:53568 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:17:42] 127.0.0.1:53568 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:02] 127.0.0.1:59316 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:02] 127.0.0.1:59316 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:02] 127.0.0.1:59316 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:18:02] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:18:02] 127.0.0.1:59316 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:02] 127.0.0.1:59316 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:08] 127.0.0.1:36062 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:08] 127.0.0.1:36062 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:08] 127.0.0.1:36062 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:18:08] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:18:08] 127.0.0.1:36062 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:08] 127.0.0.1:36062 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:45] 127.0.0.1:52530 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:45] 127.0.0.1:52530 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:45] 127.0.0.1:52530 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:18:45] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:18:45] 127.0.0.1:52530 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:18:45] 127.0.0.1:52530 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:05] 127.0.0.1:58172 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:05] 127.0.0.1:58172 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:05] 127.0.0.1:58172 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:19:05] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:19:05] 127.0.0.1:58172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:05] 127.0.0.1:58172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:06] 127.0.0.1:58172 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:06] 127.0.0.1:58172 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:06] 127.0.0.1:58172 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:19:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:19:06] 127.0.0.1:58172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:06] 127.0.0.1:58172 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:52] 127.0.0.1:45988 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:52] 127.0.0.1:45988 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:52] 127.0.0.1:45988 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:19:52] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:19:52] 127.0.0.1:45988 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:19:52] 127.0.0.1:45988 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:15] 127.0.0.1:49838 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:15] 127.0.0.1:49838 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:15] 127.0.0.1:49838 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:20:15] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:20:15] 127.0.0.1:49838 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:15] 127.0.0.1:49838 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:44] 127.0.0.1:35670 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:44] 127.0.0.1:35670 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:44] 127.0.0.1:35670 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:20:44] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:20:44] 127.0.0.1:35670 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:20:44] 127.0.0.1:35670 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:21:14] 127.0.0.1:34366 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:21:14] 127.0.0.1:34366 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:21:14] 127.0.0.1:34366 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:21:14] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:21:14] 127.0.0.1:34366 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:21:14] 127.0.0.1:34366 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:43] 127.0.0.1:49020 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:43] 127.0.0.1:49020 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:43] 127.0.0.1:49020 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:25:43] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:25:43] 127.0.0.1:49020 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:43] 127.0.0.1:49020 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:57] 127.0.0.1:55206 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:57] 127.0.0.1:55206 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:57] 127.0.0.1:55206 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:25:57] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:25:57] 127.0.0.1:55206 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:25:57] 127.0.0.1:55206 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:29:31] 127.0.0.1:58008 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:29:31] 127.0.0.1:58008 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:29:31] 127.0.0.1:58008 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:29:31] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:29:31] 127.0.0.1:58008 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:29:31] 127.0.0.1:58008 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:50:51] 127.0.0.1:43746 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:50:51] 127.0.0.1:43746 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:50:51] 127.0.0.1:43746 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:50:51] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:50:51] 127.0.0.1:43746 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:50:51] 127.0.0.1:43746 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:06] 127.0.0.1:53018 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:06] 127.0.0.1:53018 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:06] 127.0.0.1:53018 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:51:06] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:51:06] 127.0.0.1:53018 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:06] 127.0.0.1:53018 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:19] 127.0.0.1:45122 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:19] 127.0.0.1:45122 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:19] 127.0.0.1:45122 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:51:19] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:51:19] 127.0.0.1:45122 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:19] 127.0.0.1:45122 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:50] 127.0.0.1:57248 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:50] 127.0.0.1:57248 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:50] 127.0.0.1:57248 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:51:50] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:51:50] 127.0.0.1:57248 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:51:50] 127.0.0.1:57248 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:53:59] 127.0.0.1:47658 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:53:59] 127.0.0.1:47658 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:53:59] 127.0.0.1:47658 - "GET /api/v2/tenants/default_tenant/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[36mDEBUG[0m:    [12-12-2024 11:53:59] Collection test already exists, returning existing collection.
+[32mINFO[0m:     [12-12-2024 11:53:59] 127.0.0.1:47658 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [12-12-2024 11:53:59] 127.0.0.1:47658 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/bdc0cc90-373f-46fc-98ae-22dd40962173/query HTTP/1.1" 200

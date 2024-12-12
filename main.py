@@ -266,9 +266,9 @@ async def verify_2fa(request: TwoFACodeRequest):
         # Regenerate access token on successful 2FA verification
         access_token = create_access_token(data={"sub": username})
 
-        #get chat historys
-        Pinned_chats=fetch_pinned_chats(username)
-        prev_chats=fetch_previous_chats(username)
+        # #get chat historys
+        # Pinned_chats=fetch_pinned_chats(username)
+        # prev_chats=fetch_previous_chats(username)
 
         return {
             "status": "success",
@@ -276,8 +276,8 @@ async def verify_2fa(request: TwoFACodeRequest):
             "token_type": "bearer",
             "username": username,
             "isAdmin": isAdmin,
-            "Pinned_chats":Pinned_chats,
-            "Previous_chats": prev_chats, 
+            # "Pinned_chats":Pinned_chats,
+            # "Previous_chats": prev_chats, 
         }
     
     
@@ -371,7 +371,7 @@ async def websocket_endpoint(websocket: WebSocket):
         #logger.info(token)
 
         token = websocket.query_params.get("Authorization")
-
+        
         logger.info(token)
         if token:
             if not token.startswith("Bearer "):
@@ -396,6 +396,17 @@ async def websocket_endpoint(websocket: WebSocket):
             logger.info(f"User {user_id} connected successfully")
             redis_key = f"chat_history:{user_id}"
             bot_mode= websocket.query_params.get("bot_mode","rag")
+
+            users_chat_history = FetchChatHistory(user_id)
+            
+            # Send chat history to the frontend
+            await websocket.send_json({
+                "type": "chat_history",
+                "session_id": session_id,
+                "chat_history": users_chat_history
+            })
+
+
 
             # logger.info(redis_key)
             # logger.info(bot_mode)
@@ -500,14 +511,14 @@ async def websocket_endpoint(websocket: WebSocket):
         logger.info("WebSocket closed successfully")
 
 
+def FetchChatHistory(user):
+    Pinned_chats=fetch_pinned_chats(user)
+    prev_chats=fetch_previous_chats(user)
 
-
-
-
-
-
-
-
+    return {
+        "Pinned_chats":Pinned_chats,
+        "Previous_chats": prev_chats, 
+    }
 
 #works on postman, have to intergrate with frontend
 #needs better system maintained dict, need a better solution instead of this api call
@@ -660,7 +671,7 @@ async def toggle_isPinned(chat_session_id:str):
 
         if pin_status==False and total_pinned_count==MAX_PINNED_CHATS:
             return {
-                    "message": f"Already pinned. You have {MAX_PINNED_CHATS} pinned chats."
+                    "message": f"You have {MAX_PINNED_CHATS} pinned chats."
                 }
         elif pin_status==False:
                 # If it's not pinned, pin it
@@ -709,43 +720,85 @@ async def delete_chat_session(chat_session_id: str):
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 
-#returns all the pinned chats
-def fetch_pinned_chats(username):
-    try:
-        with SessionLocal() as session:
-            stmt = select(chat_history_table).where(
-                (chat_history_table.c.user_id == username) &
-                (chat_history_table.c.is_pinned == True)
-            )
-            pinned_chats = session.execute(stmt).fetchall()
+# #returns all the pinned chats
+# def fetch_pinned_chats(username):
+#     try:
+#         with SessionLocal() as session:
+#             stmt = select(chat_history_table).where(
+#                 (chat_history_table.c.user_id == username) &
+#                 (chat_history_table.c.is_pinned == True)
+#             )
+#             pinned_chats = session.execute(stmt).fetchall()
         
-        if not pinned_chats: return {'message':'No chat history'}
+#         if not pinned_chats: return {}
 
-        formatted_chat_history=[]
-        for chat in pinned_chats:
-            # Extract the full chat history (list of message history)
-            chat_row = chat[5]
-            session=[]
-            session_id=chat[1]
+#         formatted_chat_history=[]
+#         for chat in pinned_chats:
+#             # Extract the full chat history (list of message history)
+#             chat_row = chat[5]
+#             session=[]
+#             session_id=chat[1]
+#             session_title=chat[4]
             
-            # Loop through each chat entry in the full chat history
-            for entry in chat_row:
-                session.append({
-                    "user_message": entry['user_message'],
-                    "bot_response": entry['bot_response'],
-                    "timestamp": entry['timestamp']
-                })
-            session.reverse()
-            formatted_chat_history.append([session_id,session])
+#             # Loop through each chat entry in the full chat history
+#             for entry in chat_row:
+#                 session.append({
+#                     "user_message": entry['user_message'],
+#                     "bot_response": entry['bot_response'],
+#                     "timestamp": entry['timestamp']
+#                 })
+#             session.reverse()
+#             formatted_chat_history.append({'session_id':session_id,'session_title':session_title, 'chat_history': session})
+#         return formatted_chat_history
 
-        return formatted_chat_history
+#     except SQLAlchemyError as e:
+#         # Handle SQLAlchemy-specific exceptions
+#         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+#     except Exception as e:
+#         # Handle generic exceptions
+#         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-    except SQLAlchemyError as e:
-        # Handle SQLAlchemy-specific exceptions
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        # Handle generic exceptions
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+# #fetches last 5 chats that are not pinned
+# def fetch_previous_chats(username: str):
+#     try:
+#         with SessionLocal() as session:
+#             # Select chats where username matches and chats are not pinned, then order by timestamp
+#             stmt = select(chat_history_table).where(
+#                 (chat_history_table.c.user_id == username) &
+#                 (chat_history_table.c.is_pinned == False)  # Assuming pinned is a boolean column
+#             ).order_by(chat_history_table.c.end_time.desc()).limit(5)
+            
+#             chat_session = session.execute(stmt).fetchall()
+#         if not chat_session: return {}
+
+#         formatted_chat_history=[]
+#         for chat in chat_session:
+#             # Extract the full chat history (list of message history)
+#             chat_row = chat[5]
+#             session=[]
+#             session_id=chat[1]
+#             session_title=chat[4]
+
+#             # Loop through each chat entry in the full chat history
+#             for entry in chat_row:
+#                 session.append({
+#                     "user_message": entry['user_message'],
+#                     "bot_response": entry['bot_response'],
+#                     "timestamp": entry['timestamp']
+#                 })
+#             session.reverse()
+#             formatted_chat_history.append({'session_id':session_id,'session_title':session_title, 'chat_history': session})
+
+#         return formatted_chat_history
+
+#     except SQLAlchemyError as e:
+#         # Handle SQLAlchemy-specific exceptions
+#         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+#     except Exception as e:
+#         # Handle generic exceptions
+#         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+
 
 #fetches last 5 chats that are not pinned
 def fetch_previous_chats(username: str):
@@ -758,26 +811,16 @@ def fetch_previous_chats(username: str):
             ).order_by(chat_history_table.c.end_time.desc()).limit(5)
             
             chat_session = session.execute(stmt).fetchall()
-        if not chat_session: return {'message':'No chat history'}
+        if not chat_session: return {}
 
-        formatted_chat_history=[]
+        chat_id_and_title=[]
         for chat in chat_session:
-            # Extract the full chat history (list of message history)
-            chat_row = chat[5]
-            session=[]
             session_id=chat[1]
-            
-            # Loop through each chat entry in the full chat history
-            for entry in chat_row:
-                session.append({
-                    "user_message": entry['user_message'],
-                    "bot_response": entry['bot_response'],
-                    "timestamp": entry['timestamp']
-                })
-            session.reverse()
-            formatted_chat_history.append([session_id,session])
+            session_title=chat[4]
 
-        return formatted_chat_history
+            chat_id_and_title.append({'session_id':session_id,'session_title':session_title})
+
+        return chat_id_and_title
 
     except SQLAlchemyError as e:
         # Handle SQLAlchemy-specific exceptions
@@ -788,7 +831,243 @@ def fetch_previous_chats(username: str):
 
 
 
+#returns all the pinned chats
+def fetch_pinned_chats(username):
+    try:
+        with SessionLocal() as session:
+            stmt = select(chat_history_table).where(
+                (chat_history_table.c.user_id == username) &
+                (chat_history_table.c.is_pinned == True)
+            )
+            pinned_chats = session.execute(stmt).fetchall()
+        
+        if not pinned_chats: return {}
+
+        chat_id_and_title=[]
+        for chat in pinned_chats:
+            session_id=chat[1]
+            session_title=chat[4]
+
+            chat_id_and_title.append({'session_id':session_id,'session_title':session_title})
+
+        return chat_id_and_title
+
+    except SQLAlchemyError as e:
+        # Handle SQLAlchemy-specific exceptions
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        # Handle generic exceptions
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+    except SQLAlchemyError as e:
+        # Handle SQLAlchemy-specific exceptions
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        # Handle generic exceptions
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+
+
+
+
+
+
+
+#patils code
+import os
+from fastapi import FastAPI, WebSocket, File, UploadFile,  Form, HTTPException
+import asyncio
+from groq import Groq
+# from dotenv import load_dotenv
+from pydantic import BaseModel
+#rom langchain_community.document_loaders import PDFPlumberLoader
+# from langchain_chroma import Chroma
+# from langchain_text_splitters import RecursiveCharacterTextSplitter
+# from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from fastapi.middleware.cors import CORSMiddleware
+# import pandas as pd
+import json
+# from langchain_community.tools.tavily_search import TavilySearchResults
+import getpass
+from pathlib import Path
+import shutil
+# from datetime import datetime
+from typing import List
+import base64
+import pdfplumber
+import io
+import model
+
+UPLOAD_DIR = Path("files")
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+
+groq_api = "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"
+
+async def stream_generate_async(messages):
+    client = Groq(api_key = groq_api)
+    completion = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=messages,
+        temperature=0.4,
+        max_tokens=1024,
+        top_p=0.9,
+        stream=True,
+        stop=None,
+    )
+    for chunk in completion:
+        yield chunk.choices[0].delta.content or ""
+        await asyncio.sleep(0)
+
+# def generate_async(messages):
+#     client = Groq(api_key = groq_api)
+#     completion = client.chat.completions.create(
+#         model="gemma2-9b-it",
+#         messages=messages,
+#         temperature=0.4,
+#         max_tokens=1024,
+#         top_p=0.9,
+#         stream=False,
+#         stop=None,
+#     )
+#     return completion.choices[0].message.content
+
+query_format = """
+Question: 
+{question}\n\n
+
+Context:
+{context}
+"""
+
+
+@app.websocket("/askpdf")
+async def websocket_askpdf(websocket: WebSocket):
+    await websocket.accept()
+    
+    try:
+        while True:
+            query = await websocket.receive_text()
+            question = json.loads(query)
+            print(str(query))
+            query = question.get("message")
+            print(query)
+            file_data = question.get("file")
+            if file_data:
+                file_content = base64.b64decode(file_data["content"])
+                file_name = file_data["name"]
+                file_type = file_data["type"]
+                if file_type == 'application/pdf':
+                    pdf_file = io.BytesIO(file_content)
+                    text = ""
+                    with pdfplumber.open(pdf_file) as pdf:
+                        for page in pdf.pages:
+                            text += page.extract_text() or ""  # handle empty pages
+                        print("PDF content:", text)
+
+                prompt = query_format.format(question=query, context=text)
+                messages=[
+                    {
+                        "role": "user",
+                        "content": """
+                            You are a context-based Q&A assistant. Your role is to:
+                            1. Answer questions using ONLY the provided context, never external knowledge
+                            2. Keep answers concise unless specifically asked to elaborate and also properly format and beautify it.
+                            3. If asked to summarize the document(pdf, word, etc) you summarize it instead of doing a Q&A
+                            4. If the context doesn't contain enough information to answer fully:
+                            - State this clearly
+                            - Don't speculate or make assumptions
+                            - Indicate what information is missing
+                            Remember: Accuracy and proper source attribution are your top priorities.
+                        """
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ]
+                async for chunk in stream_generate_async(messages):
+                    await websocket.send_text(chunk)
+
+                continue
+
+            # file_names = os.listdir('/files')
+            # files_string = '\n'.join(file_names)
+            
+            # message=[
+            #     {
+            #         "role": "system",
+            #         "content": """
+            #         """
+            #     },
+            #     {
+            #         "role": "user",
+            #         "content": prompt,
+            #     }
+            # ]
+
+
+            # if mode == "summary":
+            #     print("")
+
+            await websocket.send_text(await model.llm_response(query=query))
+
+
+    except Exception as e:
+        await websocket.send_json({
+            "type": "error",
+            "message": str(e)
+        })
+    finally:
+        await websocket.close()
+
+
+
+@app.post("/pdfupload")
+async def upload_documents(documents: List[UploadFile] = File(...)):
+    saved_files = []
+
+    for upload_file in documents:
+        file_path = UPLOAD_DIR / upload_file.filename
+        
+        # Save the file
+        with file_path.open("wb") as buffer:
+            shutil.copyfileobj(upload_file.file, buffer)
+        
+        saved_files.append({
+            "original_name": upload_file.filename,
+            "saved_path": str(file_path)
+        })
+
+        await model.add_document(file_path=UPLOAD_DIR, file_name=upload_file.filename)
+
+
+    return {
+        "message": "Upload successful",
+        "files": saved_files
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     host_ip=os.getenv("HOST_IP")
-    uvicorn.run(app, host=host_ip, port=8000)
+    uvicorn.run(app, host=host_ip, port=8080)
     
