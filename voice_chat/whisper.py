@@ -1,5 +1,10 @@
 import openai
 import os
+from gtts import gTTS
+
+
+language = 'en'
+store_location='audio_files/txt_to_speech'
 
 #may be usable
 api_key= os.getenv("OPENAI_API_KEY")
@@ -26,27 +31,15 @@ def transcribe_audio_whisper(file_path):
         return None
 
 
-# #try vosk
+def text_to_speech(text_response):
+    # Create TTS object
+    tts = gTTS(text=text_response, lang=language, slow=False)
 
-# import wave
-# import json
-# from vosk import Model, KaldiRecognizer
+    # Save audio file
+    tts.save(f'{store_location}output.mp3')
+    print("Audio saved as 'output.mp3'")
 
-# # Load the model
-# model = Model("path_to_vosk_model")  # You need to download the appropriate Vosk model for your language
-
-# # Open the WAV file
-# wf = wave.open("your_audio.wav", "rb")
-# recognizer = KaldiRecognizer(model, wf.getframerate())
-
-# # Recognize speech from the audio file
-# result = ""
-# while True:
-#     data = wf.readframes(4000)
-#     if len(data) == 0:
-#         break
-#     if recognizer.AcceptWaveform(data):
-#         result = recognizer.Result()
-
-# # Parse and print the result
-# print(json.loads(result)["text"])
+    # Play the audio file (optional)
+    #os.system("start output.mp3")  # Windows
+    # os.system("afplay output.mp3")  # macOS
+    # os.system("mpg321 output.mp3")  # Linux

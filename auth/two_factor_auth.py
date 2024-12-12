@@ -53,6 +53,7 @@ def send_otp_via_sms(phone_number:str, otp:str):
             from_=TWILIO_PHONE_NUMBER,
             to=phone_number
         )
+        print(f"Message SID: {message.sid}")
         return {"status": "success", "sid": message.sid}
     except Exception as e:
         return {"status": "error", "message": str(e)}
@@ -73,8 +74,7 @@ def generate_totp_secret():
     totp_secret = base64.b32encode(secret_bytes).decode('utf-8')
     return totp_secret
 
-
 # send_otp_via_sms(
-# phone_number='+917045080926',
+# phone_number='+917304767827',
 # otp='674537'
 # )

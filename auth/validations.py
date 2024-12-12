@@ -37,3 +37,4 @@ class UserLogin(BaseModel):
 class TwoFACodeRequest(BaseModel):
     username: str
     code: str
+
