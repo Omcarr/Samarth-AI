@@ -10,6 +10,7 @@ files/
 audio_files/
 summaries/
 system_dict.txt
+frontend/node_modules/
 chroma.log
 Compendium_Book.pdf
 CCMP_DOC_1.pdf
