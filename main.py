@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from pyotp import TOTP
 
 from auth.two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret, send_otp_via_sms
-from llama3.llm_res import setup_model, llm_response
+from model.llm_res import setup_model, llm_response
 from profanity.profantiy_detector import profanity_detector, build_trie
 from ws.ws_setup import WebSocketConnectionManager
 from db_files.chat_history import generate_chat_summary
@@ -34,9 +34,8 @@ import functools
 from redis import Redis
 from sqlalchemy.exc import SQLAlchemyError
 from pdf2image import convert_from_bytes
+from groq import Groq
 
-# #make the llm coversational using lanchains
-# from groq import Groq
 # from langchain.chains import ConversationChain, LLMChain
 # from langchain_core.prompts import (
 #     ChatPromptTemplate,
@@ -522,7 +521,6 @@ def FetchChatHistory(user):
         "Previous_chats": prev_chats, 
     }
 
-#works on postman, have to intergrate with frontend
 #needs better system maintained dict, need a better solution instead of this api call
 @app.post('/profanity_detector')
 async def text_filter(input: str):
@@ -536,8 +534,6 @@ async def text_filter(input: str):
         return {"cleaned_text": user_text}
     except Exception:
         raise HTTPException(status_code=500, detail="Internal server error")
-
-
 
 
 #to get users audio and get it transcribed from whisper model
@@ -722,87 +718,6 @@ async def delete_chat_session(chat_session_id: str):
         # Handle generic exceptions
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-
-# #returns all the pinned chats
-# def fetch_pinned_chats(username):
-#     try:
-#         with SessionLocal() as session:
-#             stmt = select(chat_history_table).where(
-#                 (chat_history_table.c.user_id == username) &
-#                 (chat_history_table.c.is_pinned == True)
-#             )
-#             pinned_chats = session.execute(stmt).fetchall()
-        
-#         if not pinned_chats: return {}
-
-#         formatted_chat_history=[]
-#         for chat in pinned_chats:
-#             # Extract the full chat history (list of message history)
-#             chat_row = chat[5]
-#             session=[]
-#             session_id=chat[1]
-#             session_title=chat[4]
-            
-#             # Loop through each chat entry in the full chat history
-#             for entry in chat_row:
-#                 session.append({
-#                     "user_message": entry['user_message'],
-#                     "bot_response": entry['bot_response'],
-#                     "timestamp": entry['timestamp']
-#                 })
-#             session.reverse()
-#             formatted_chat_history.append({'session_id':session_id,'session_title':session_title, 'chat_history': session})
-#         return formatted_chat_history
-
-#     except SQLAlchemyError as e:
-#         # Handle SQLAlchemy-specific exceptions
-#         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-#     except Exception as e:
-#         # Handle generic exceptions
-#         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
-# #fetches last 5 chats that are not pinned
-# def fetch_previous_chats(username: str):
-#     try:
-#         with SessionLocal() as session:
-#             # Select chats where username matches and chats are not pinned, then order by timestamp
-#             stmt = select(chat_history_table).where(
-#                 (chat_history_table.c.user_id == username) &
-#                 (chat_history_table.c.is_pinned == False)  # Assuming pinned is a boolean column
-#             ).order_by(chat_history_table.c.end_time.desc()).limit(5)
-            
-#             chat_session = session.execute(stmt).fetchall()
-#         if not chat_session: return {}
-
-#         formatted_chat_history=[]
-#         for chat in chat_session:
-#             # Extract the full chat history (list of message history)
-#             chat_row = chat[5]
-#             session=[]
-#             session_id=chat[1]
-#             session_title=chat[4]
-
-#             # Loop through each chat entry in the full chat history
-#             for entry in chat_row:
-#                 session.append({
-#                     "user_message": entry['user_message'],
-#                     "bot_response": entry['bot_response'],
-#                     "timestamp": entry['timestamp']
-#                 })
-#             session.reverse()
-#             formatted_chat_history.append({'session_id':session_id,'session_title':session_title, 'chat_history': session})
-
-#         return formatted_chat_history
-
-#     except SQLAlchemyError as e:
-#         # Handle SQLAlchemy-specific exceptions
-#         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-#     except Exception as e:
-#         # Handle generic exceptions
-#         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
-
-
 #fetches last 5 chats that are not pinned
 def fetch_previous_chats(username: str):
     try:
@@ -871,39 +786,20 @@ def fetch_pinned_chats(username):
 
 
 
-
-#patils code
-import os
-from fastapi import FastAPI, WebSocket, File, UploadFile,  Form, HTTPException
-import asyncio
-from groq import Groq
-# from dotenv import load_dotenv
-from pydantic import BaseModel
-#rom langchain_community.document_loaders import PDFPlumberLoader
-# from langchain_chroma import Chroma
-# from langchain_text_splitters import RecursiveCharacterTextSplitter
-# from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
-from fastapi.middleware.cors import CORSMiddleware
-# import pandas as pd
-import json
-# from langchain_community.tools.tavily_search import TavilySearchResults
-import getpass
 from pathlib import Path
 import shutil
-# from datetime import datetime
+from datetime import datetime
 from typing import List
 import base64
 import pdfplumber
 import io
-import model
+import Rag.model as model
 
 UPLOAD_DIR = Path("files")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
-
-groq_api = "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"
+groq_api = os.environ["GROQ_API_KEY"]
 
 async def stream_generate_async(messages):
     client = Groq(api_key = groq_api)
@@ -1065,12 +961,12 @@ async def websocket_askpdf(websocket: WebSocket):
             print("test 4")
             print(files_paths)
 
-            if "bullet" in query:
-                with open("summaries/Data_Loss_Prevention_Policy_badWords.txt", 'r') as file:
-                    content = file.read()
-                    await websocket.send_text(content)
+            # if "bullet" in query:
+            #     with open("summaries/Data_Loss_Prevention_Policy_badWords.txt", 'r') as file:
+            #         content = file.read()
+            #         await websocket.send_text(content)
 
-            elif "summary" in query.lower() or "summarize" in query.lower() or "summarise" in query.lower():
+            if "summary" in query.lower() or "summarize" in query.lower() or "summarise" in query.lower():
                 sysprompt = '''You are an intelligent query routing system that determines the correct file path for the given query.
                     Here are the file paths of the pdfs:
                     {file_paths}\n
@@ -1114,6 +1010,7 @@ async def websocket_askpdf(websocket: WebSocket):
             "message": str(e)
         })
     finally:
+        #save the chat history
         await websocket.close()
 
 
@@ -1168,13 +1065,6 @@ def AddWordToSystemDict(word):
 
 
 
-
-
-
-
-
-
 if __name__ == "__main__":
     host_ip=os.getenv("HOST_IP")
     uvicorn.run(app, host=host_ip, port=8080)
-    
