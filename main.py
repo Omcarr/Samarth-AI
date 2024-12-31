@@ -25,7 +25,6 @@ from sqlalchemy.dialects.postgresql import JSONB
 import functools
 from redis import Redis
 from sqlalchemy.exc import SQLAlchemyError
-from pdf2image import convert_from_bytes
 from groq import Groq
 from PIL import Image
 
