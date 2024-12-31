@@ -1,28 +1,21 @@
 from fastapi import FastAPI, HTTPException, Depends, WebSocket, WebSocketDisconnect, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
 from sqlalchemy import create_engine, MetaData, Table, insert, delete, func, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.future import select
 import sqlalchemy as sa
-
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-
 from auth.validations import UserCreate, UserLogin, TwoFACodeRequest
 from redis import asyncio as aioredis
-
 import bcrypt, jwt, json,logging, uvicorn, os, uuid
 from datetime import datetime, timedelta
 from pyotp import TOTP
-
 from auth.two_factor_auth import SECRET_KEY, ALGORITHM, oauth2_scheme, send_otp_via_email, create_access_token, generate_totp_secret, send_otp_via_sms
-from model.llm_res import setup_model, llm_response
+from Rag.llm_res import setup_model, llm_response
 from profanity.profantiy_detector import profanity_detector, build_trie
 from ws.ws_setup import WebSocketConnectionManager
 from db_files.chat_history import generate_chat_summary
-
 import json
 from voice_chat.whisper import transcribe_audio_whisper
 from pydub import AudioSegment
@@ -30,11 +23,11 @@ import tempfile
 import asyncio
 from sqlalchemy.dialects.postgresql import JSONB
 import functools
-
 from redis import Redis
 from sqlalchemy.exc import SQLAlchemyError
 from pdf2image import convert_from_bytes
 from groq import Groq
+from PIL import Image
 
 # from langchain.chains import ConversationChain, LLMChain
 # from langchain_core.prompts import (
@@ -43,13 +36,6 @@ from groq import Groq
 #     MessagesPlaceholder,
 # )
 
-
-from langchain_core.messages import SystemMessage
-from langchain.chains.conversation.memory import ConversationBufferWindowMemory
-from langchain_groq import ChatGroq
-from langchain.prompts import PromptTemplate
-import pytesseract
-from PIL import Image
 
 #db connection
 DATABASE_URL = os.getenv("DATABASE_URL")
