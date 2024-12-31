@@ -1,14 +1,15 @@
 # from huggingface_hub import login
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
+import os
 
 
-
-HUGGINGFACE_TOKEN = "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"
+HUGGINGFACE_TOKEN = os.environ["HUGGINGFACE_TOKEN"]
 
 MAX_CONTENT_TOKENS = 4000
-TOKENIZER_MODEL_NAME = "meta-llama/Llama-3.1-8B"
-GROQ_MODEL_NAME = "llama3-8b-8192"
+TOKENIZER_MODEL_NAME =  os.environ["TOKENIZER_MODEL_NAME"]
+
+GROQ_MODEL_NAME = os.environ["GROQ_MODEL_NAME"]
 
 SYSTEM = '''
 You are given a chunk of text from a document named {doc_title}.

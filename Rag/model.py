@@ -1,7 +1,7 @@
 import asyncio
 from Rag.ocr import extract_text
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from cch import add_chunk_header
+from Rag.cch import add_chunk_header
 from vector_db import VectorDatabase
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
