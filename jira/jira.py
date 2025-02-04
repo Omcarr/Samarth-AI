@@ -10,8 +10,9 @@ def post_jira_issues(content_text, content_type, para):
     load_dotenv()
     jira_api = os.getenv("JIRA_API_KEY")
     jira_url = os.getenv("JIRA_URL")
+    jira_mail = os.getenv("JIRA_MAIL")
 
-    auth = HTTPBasicAuth("om.patil22@spit.ac.in", jira_api)
+    auth = HTTPBasicAuth(jira_mail, jira_api)
     headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
