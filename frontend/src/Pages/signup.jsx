@@ -54,7 +54,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "https://815d-117-96-43-108.ngrok-free.app/signup",
+        "http://localhost:8080/signup",
         {
           username,
           email,

@@ -27,17 +27,13 @@ from redis import Redis
 from sqlalchemy.exc import SQLAlchemyError
 from groq import Groq
 from PIL import Image
+from dotenv import load_dotenv
 
-# from langchain.chains import ConversationChain, LLMChain
-# from langchain_core.prompts import (
-#     ChatPromptTemplate,
-#     HumanMessagePromptTemplate,
-#     MessagesPlaceholder,
-# )
-
+load_dotenv()
 
 #db connection
 DATABASE_URL = os.getenv("DATABASE_URL")
+print(DATABASE_URL)
 engine=create_engine(DATABASE_URL, future=True) 
 metadata = MetaData()
 Base = declarative_base()
@@ -50,9 +46,7 @@ chat_history_table=Table("chat_history", metadata, autoload_with=engine)
 
 # Connect to Redis
 redis = aioredis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
-
 redis_sync_client = Redis(host='localhost', port=6379, db=0)
-
 
 # Set up a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -66,19 +60,18 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=['http://localhost:5173'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Create objects of necessary classes
+# Create objects of necessary classess
 FOUL_TRIE = build_trie()
 LOCAL_LLM = setup_model()
 manager = WebSocketConnectionManager()
 OTP_LIFESPAN= 300 #seconds
 MAX_PINNED_CHATS=3
-
 
 
 #chat history storage
@@ -162,9 +155,6 @@ def save_chat_history(redis_client, redis_key, SessionLocal, user_id, logger):
         logger.error(f"Error saving chat history: {str(e)}")
 
 
-
-
-
 #<----------------------------APIS--------------------------------------->
 # Login Endpoint
 @app.post("/login")
@@ -204,7 +194,7 @@ async def login(user: UserLogin):
 
         # Send the TOTP code via email and sms
         #send_otp_via_sms(fetched_user.phone_number, otp_code)
-        send_otp_via_email(fetched_user.email, otp_code)
+        # send_otp_via_email(fetched_user.email, otp_code)
         
         return {
             "status": "success",
@@ -245,13 +235,14 @@ async def verify_2fa(request: TwoFACodeRequest):
         logger.info(f"User provided OTP code for verification: {code}")
 
         # Verify the provided OTP
-        if not totp.verify(code):
+        if not expected_code==code:
             logger.warning("Invalid 2FA code provided.")
             raise HTTPException(status_code=401, detail="Invalid 2FA code.")
-
+        
         # Regenerate access token on successful 2FA verification
         access_token = create_access_token(data={"sub": username})
-
+        logger.info(access_token)
+        
         # #get chat historys
         # Pinned_chats=fetch_pinned_chats(username)
         # prev_chats=fetch_previous_chats(username)
@@ -277,7 +268,6 @@ async def verify_2fa(request: TwoFACodeRequest):
         raise HTTPException(status_code=500, detail={"status": "error", "message": str(e)})
 
 
-#works on postman, have to intergrate with frontend
 @app.post("/signup")
 async def add_user(user: UserCreate):
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
@@ -635,7 +625,6 @@ def get_chat_history(chat_session_id: str):
         # Handle generic exceptions
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-
 #operations realted to pinning or unpinng 
 @app.get("/toggle_isPinned")
 async def toggle_isPinned(chat_session_id:str):
@@ -785,6 +774,8 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 groq_api = os.environ["GROQ_API_KEY"]
+
+logger.info(groq_api)
 
 async def stream_generate_async(messages):
     client = Groq(api_key = groq_api)
@@ -1052,4 +1043,4 @@ def AddWordToSystemDict(word):
 
 if __name__ == "__main__":
     host_ip=os.getenv("HOST_IP")
-    uvicorn.run(app, host=host_ip, port=8080)
+    uvicorn.run("main:app", host=host_ip, port=8080, reload=True)

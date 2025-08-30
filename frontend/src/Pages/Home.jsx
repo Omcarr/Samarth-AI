@@ -69,7 +69,7 @@ const Home = ({}) => {
   const { sendMessage, response,  isConnected, responseTime, reset } =
     useWebSocket({
       // url: `ws://192.168.1.10:8000/askpdf`,
-      url: `ws://815d-117-96-43-108.ngrok-free.app/askpdf`,
+      url: `ws://localhost:8080/askpdf`,
     });
 
   console.log(localStorage);

@@ -18,7 +18,7 @@ const DocumentUpload = () => {
     });
 
     try {
-      const response = await fetch('https://815d-117-96-43-108.ngrok-free.app/pdfupload', {
+      const response = await fetch('http://localhost:8080/pdfupload', {
         method: 'POST',
         body: formData,
       });

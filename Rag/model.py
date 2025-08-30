@@ -1,21 +1,21 @@
 import asyncio
 from Rag.ocr import extract_text
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from Rag.cch import add_chunk_header
-from vector_db import VectorDatabase
+from  Rag.cch import add_chunk_header
+from  Rag.vector_db import VectorDatabase
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from concurrent.futures import ThreadPoolExecutor
 from itertools import cycle
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
+
 GROQ_MODEL_NAME = "llama3-8b-8192"# os.getenv("GROQ_MODEL_NAME")
 MAX_CONTENT_TOKENS = 4000
 
-GROQ_API_KEYS = os.environ["GROQ_API_KEYS_str"]
-# os.getenv("GROQ_API_KEYS_str")
+# GROQ_API_KEYS = os.environ["GROQ_API_KEYS_str"]
+GROQ_API_KEYS= os.getenv("GROQ_API_KEYS_str").split(",")
 
 # print(GROQ_API_KEYS)
 GROQ_API_KEY_CYCLE = cycle(GROQ_API_KEYS)
@@ -155,12 +155,11 @@ async def llm_response(query: str):
     print(response)
 
     return response.content
-    # return "hiiiiiiiiii"
 
 
 
 async def main():
-    await add_document("CCMP_DOC_1.pdf", "An o")
+    await add_document("./Baker.pdf", "An o")
     
     # print("generating response...")
     # response = await llm_response(input("Enter your query: "))
@@ -171,5 +170,5 @@ async def main():
     # print(response)
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())

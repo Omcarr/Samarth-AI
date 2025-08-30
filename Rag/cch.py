@@ -4,12 +4,12 @@ from langchain_groq import ChatGroq
 import os
 
 
-HUGGINGFACE_TOKEN = os.environ["HUGGINGFACE_TOKEN"]
+HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")
 
 MAX_CONTENT_TOKENS = 4000
-TOKENIZER_MODEL_NAME =  os.environ["TOKENIZER_MODEL_NAME"]
+TOKENIZER_MODEL_NAME =  os.getenv("TOKENIZER_MODEL_NAME")
 
-GROQ_MODEL_NAME = os.environ["GROQ_MODEL_NAME"]
+GROQ_MODEL_NAME = os.getenv("GROQ_MODEL_NAME")
 
 SYSTEM = '''
 You are given a chunk of text from a document named {doc_title}.

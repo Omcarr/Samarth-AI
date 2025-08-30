@@ -1,5 +1,5 @@
 import os, smtplib, jwt, secrets, base64
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -59,12 +59,30 @@ def send_otp_via_sms(phone_number:str, otp:str):
         return {"status": "error", "message": str(e)}
 
 #creates a jwt token with validity of 30 mins and encodes it
+
+# def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=30)):
+#     to_encode = data.copy()
+    
+#     # Always use UTC for JWT
+#     expire = datetime.now(timezone.utc) + expires_delta
+#     to_encode.update({"exp": int(expire.timestamp())})
+#     encoded_jwt = jwt.encode(to_encode, "your-secret-key", algorithm="HS256")
+    
+#     return encoded_jwt
+
+
 def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes=30)):
     to_encode = data.copy()
-    expire = datetime.now() + expires_delta
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    if "sub" in to_encode:
+        to_encode["sub"] = str(to_encode["sub"])
+    
+    expire = datetime.now(timezone.utc) + expires_delta
+    to_encode.update({"exp": int(expire.timestamp())})
+
+    print(f"Encoding JWT with payload: {to_encode}, SECRET_KEY type={type(SECRET_KEY)}")
+    encoded_jwt = jwt.encode(to_encode, "your-secret-key", algorithm="HS256")
     return encoded_jwt
+
 
 
 def generate_totp_secret():

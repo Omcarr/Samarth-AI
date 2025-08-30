@@ -99,7 +99,7 @@ const FoulLanguageManager = () => {
     
     console.log('Sending recent word to backend:', recentWord);
     
-    return axios.post(`https://815d-117-96-43-108.ngrok-free.app/system_dict?word=${words[words.length - 1]}`, {
+    return axios.post(`http://localhost:8080/system_dict?word=${words[words.length - 1]}`, {
         headers: {
             'Content-Type': 'application/json'
         }

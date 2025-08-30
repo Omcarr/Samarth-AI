@@ -70,7 +70,7 @@ const DocumentProcessing = ({}) => {
     responseTime,
     reset 
   } = useWebSocket({
-    url: `ws:623d-103-167-123-72.ngrok-free.app/ws/chat?Authorization=Bearer ${localStorage.getItem("token")}`,
+    url: `ws:localhost:8080/ws/chat?Authorization=Bearer ${localStorage.getItem("token")}`,
     
   });
 

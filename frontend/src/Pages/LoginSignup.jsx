@@ -47,7 +47,7 @@ const LoginSignup = () => {
 
     try {
       const response = await axios.post(
-        "https://815d-117-96-43-108.ngrok-free.app/login",
+        "http://localhost:8080/login",
         {
           username: email,
           password,
@@ -76,7 +76,7 @@ const LoginSignup = () => {
 
     try {
       const response = await axios.post(
-        "https://815d-117-96-43-108.ngrok-free.app/verify-2fa",
+        "https://localhost:8080/verify-2fa",
         {
           username: email,
           code: verificationCode,
@@ -119,7 +119,7 @@ const LoginSignup = () => {
         setError(null);
 
         // Replace with your actual API endpoint
-        const response = await axios.post(`https://1595-14-139-61-131.ngrok-free.app/resend_otp?user_trying_to_login=${email}`, 
+        const response = await axios.post(`http://localhost:8080/resend_otp?user_trying_to_login=${email}`, 
          
         );
 
