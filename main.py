@@ -28,6 +28,13 @@ from sqlalchemy.exc import SQLAlchemyError
 from groq import Groq
 from PIL import Image
 from dotenv import load_dotenv
+import pandas as pd
+from IPython.display import Image
+import uuid 
+from pathlib import Path
+import subprocess
+import tempfile
+import os
 
 load_dotenv()
 
@@ -154,6 +161,109 @@ def save_chat_history(redis_client, redis_key, SessionLocal, user_id, logger):
     except Exception as e:
         logger.error(f"Error saving chat history: {str(e)}")
 
+
+#<----------------------------GRAPH-------------------------------------->
+
+def read_file_to_string(file_path: str, max_rows: int = 5) -> str:
+   file_ext = Path(file_path).suffix.lower()
+   
+   if file_ext in ['.xlsx', '.xls']:
+       df = pd.read_excel(file_path)
+   elif file_ext == '.csv':
+       df = pd.read_csv(file_path)
+   elif file_ext == '.json':
+       df = pd.read_json(file_path)
+   elif file_ext == '.xml':
+       df = pd.read_xml(file_path)
+   else:
+       raise ValueError(f"Unsupported file format: {file_ext}")
+   
+   result = f"Shape: {df.shape}\n"
+   result += f"Columns: {list(df.columns)}\n\n"
+   result += df.head(max_rows).to_string()
+   return result
+
+def get_read_command(file_path: str) -> str:
+   file_ext = Path(file_path).suffix.lower()
+   
+   if file_ext in ['.xlsx', '.xls']:
+       return f"pd.read_excel('{file_path}')"
+   elif file_ext == '.csv':
+       return f"pd.read_csv('{file_path}')"
+   elif file_ext == '.json':
+       return f"pd.read_json('{file_path}')"
+   elif file_ext == '.xml':
+       return f"pd.read_xml('{file_path}')"
+   else:
+       return f"pd.read_csv('{file_path}')"
+
+def generate_graph(input_file, output_dir, user_query, max_rows=5):
+   unique_id = str(uuid.uuid4())[:8]
+   output_path = f"{output_dir}/graph_{unique_id}.png"
+   
+   system_prompt = """You are a Python data visualization expert. Your task is to create matplotlib code based on provided data and queries.
+You must read the data from the specified file using pandas - do not use sample data from the prompt."""
+   
+   userprompt = """
+Based on the user's query: '{question}', provide executable Python code using matplotlib to generate the graph requested.
+The data structure is shown below for reference:
+{data}
+Requirements for the code:
+1. Load the data using: df = {read_command}
+2. Do not use the sample data shown above - read from the actual file
+3. Clean and convert data types as needed:
+   - Convert numeric columns using pd.to_numeric(..., errors='coerce')
+   - Convert date/time columns using pd.to_datetime(..., errors='coerce')
+4. Handle any missing or invalid data appropriately (e.g., drop or fill NaNs after coercion)
+5. Create the visualization with:
+   - Figure size: figsize=(12, 8)
+   - DPI: 150 or higher
+   - Rotated labels: plt.xticks(rotation=45, ha='right')
+   - Proper layout: plt.tight_layout()
+6. Save the graph to: {save_path}
+7. Do not include plt.show()
+8. Include necessary imports (pandas, matplotlib.pyplot, etc.)
+9. Use clear, descriptive titles and axis labels
+10. Apply appropriate styling and colors for professional appearance
+Return only the executable Python code without any explanations or markdown formatting.
+"""
+
+   
+   data_string = read_file_to_string(input_file, max_rows)
+   read_command = get_read_command(input_file)
+   prompt1 = userprompt.format(data=data_string, question=user_query, read_command=read_command, save_path=output_path)
+   
+   messages=[
+       {
+           "role": "system",
+           "content": system_prompt
+       },
+       {
+           "role": "user",
+           "content": prompt1,
+       }
+   ]
+   
+   response = stream_generate_async(messages)
+   instructions = response.replace('```python', '').replace('```', '').strip()
+   
+   with tempfile.NamedTemporaryFile(delete=False, suffix=".py") as temp_file:
+       temp_file.write(instructions.encode('utf-8'))
+       temp_file_path = temp_file.name
+   
+   try:
+       result = subprocess.run(['python', temp_file_path], capture_output=True, text=True)
+       if result.returncode != 0:
+           print(f"Error executing the code:\n{result.stderr}")
+           return None
+   except Exception as e:
+       print(f"Error generating the graph: {e}")
+       return None
+   finally:
+       if os.path.exists(temp_file_path):
+           os.remove(temp_file_path)
+   
+   return Image(output_path)
 
 #<----------------------------APIS--------------------------------------->
 # Login Endpoint
@@ -883,6 +993,23 @@ async def websocket_askpdf(websocket: WebSocket):
                         for page in pdf.pages:
                             text += page.extract_text() or ""  # handle empty pages
                         print("PDF content:", text)
+                elif file_type == 'text/csv' or file_name.lower().endswith('.csv'):
+                    # CSV file support
+                    try:
+                        temp_path = f"temp.csv"
+                        with open(temp_path, "wb") as temp_file:
+                            temp_file.write(file_content)
+                        print(f"Temporary file saved as {temp_path}")
+
+                    except Exception as e:
+                        print(f"Failed to parse CSV: {e}")
+
+
+                    result = generate_graph(temp_path, "graph", query)
+                    return result
+
+
+                # ...rest of your code...
                 # files_folder = 'files'
                 # os.makedirs(files_folder, exist_ok=True)  # Create folder if it doesn't exist
 
